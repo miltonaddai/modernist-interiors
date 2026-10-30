@@ -169,7 +169,7 @@
         "heading": "Less ornament. More meaning.",
         "text": "<p>We curate pieces that honour the modernist idea: every curve, joint and material should earn its place. Honest glass, brushed steel, solid wood — designed to be lived with, not just looked at.</p>",
         "button_label": "Read our story",
-        "button_link": "shopify://pages/about",
+        "button_link": "/pages/about",
         "color_scheme": "alt",
         "padding_top": 0,
         "padding_bottom": 0
