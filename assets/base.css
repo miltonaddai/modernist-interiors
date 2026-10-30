@@ -401,3 +401,9 @@ h1,h2,h3,.h1,.h2,.h-xl,.h-lg{overflow-wrap:break-word;hyphens:manual}
 @media (max-width:749px){
   .collection-card__title,.grid--tiles .collection-card__title{height:40px;padding:0 .6rem;gap:.35rem;font-size:.5625rem;letter-spacing:.04em}
 }
+
+/* ===== Sharp corners on all buttons & controls (overrides editor radius) ===== */
+html:root{--radius-button:0px}
+.button,.icon-btn,.qty,.qty-input,.qty__btn,.qty__step,input,select,textarea,.newsletter__row input,.menu-drawer__search input,.sort select,
+.option__values label,.badge,.pagination__link,.sticky-atc .button,.drawer .button,.header__dropdown,.product__thumb,
+.shopify-payment-button__button,.shopify-payment-button__button--unbranded,.shopify-payment-button__more-options{border-radius:0!important}
