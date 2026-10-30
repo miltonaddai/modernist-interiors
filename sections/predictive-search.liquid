@@ -1,0 +1,15 @@
+{%- if predictive_search.performed -%}
+<ul class="predictive__list" role="list">
+  {%- for product in predictive_search.resources.products limit: 6 -%}
+    <li><a href="{{ product.url }}" class="predictive__item">{%- if product.featured_media -%}{{ product.featured_media | image_url: width: 120 | image_tag: alt: product.title }}{%- endif -%}<span>{{ product.title }}<br><span class="muted small">{{ product.price | money }}</span></span></a></li>
+  {%- else -%}<li class="muted small">{{ 'general.no_results' | t }}</li>
+  {%- endfor -%}
+</ul>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Predictive search",
+  "settings": []
+}
+{% endschema %}

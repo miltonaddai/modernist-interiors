@@ -1,0 +1,215 @@
+<section class="hero scheme-{{ section.settings.color_scheme }} hero--{{ section.settings.height }} hero--{{ section.settings.text_position }}">
+  <div class="hero__media">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 3000 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750, 1100, 1500, 2000, 3000', alt: section.settings.image.alt }}
+    {%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder' }}{%- endif -%}
+    <div class="hero__overlay" style="opacity: {{ section.settings.overlay | divided_by: 100.0 }}"></div>
+  </div>
+  <div class="hero__content page-width reveal">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'subheading' -%}<p class="eyebrow" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+        {%- when 'heading' -%}<h1 class="hero__title h-{{ block.settings.size }}" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h1>
+        {%- when 'text' -%}<div class="hero__text rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+        {%- when 'buttons' -%}
+          <div class="button-row" {{ block.shopify_attributes }}>
+            {%- if block.settings.label_1 != blank -%}<a href="{{ block.settings.link_1 | default: routes.all_products_collection_url }}" class="button button--light">{{ block.settings.label_1 }}</a>{%- endif -%}
+            {%- if block.settings.label_2 != blank -%}<a href="{{ block.settings.link_2 | default: '#' }}" class="button button--outline">{{ block.settings.label_2 }}</a>{%- endif -%}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "tag": "section",
+  "class": "section-hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "default": "large",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "full",
+          "label": "Full screen"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Content position",
+      "default": "bottom-left",
+      "options": [
+        {
+          "value": "bottom-left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "top-left",
+          "label": "Top left"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 25
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "inverse",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "alt",
+          "label": "Sage"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "subheading",
+      "name": "Subheading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "New collection"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Modern living, thoughtfully made"
+        },
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Size",
+          "default": "xl",
+          "options": [
+            {
+              "value": "lg",
+              "label": "Large"
+            },
+            {
+              "value": "xl",
+              "label": "Extra large"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Furniture and objects designed to last a lifetime.</p>"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label_1",
+          "label": "First button label",
+          "default": "Shop now"
+        },
+        {
+          "type": "url",
+          "id": "link_1",
+          "label": "First button link"
+        },
+        {
+          "type": "text",
+          "id": "label_2",
+          "label": "Second button label"
+        },
+        {
+          "type": "url",
+          "id": "link_2",
+          "label": "Second button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner",
+      "blocks": [
+        {
+          "type": "subheading"
+        },
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "buttons"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

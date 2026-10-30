@@ -1,0 +1,93 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "s": {
+          "type": "subheading",
+          "settings": {
+            "text": "Modernist Interiors"
+          }
+        },
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Modern living, thoughtfully made",
+            "size": "xl"
+          }
+        },
+        "t": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Furniture and objects designed to last a lifetime.</p>"
+          }
+        },
+        "b": {
+          "type": "buttons",
+          "settings": {
+            "label_1": "Shop now",
+            "link_1": "shopify://collections/all",
+            "label_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "s",
+        "h",
+        "t",
+        "b"
+      ],
+      "settings": {
+        "height": "large",
+        "text_position": "bottom-left",
+        "overlay": 25,
+        "color_scheme": "inverse"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Shop the collection",
+        "collection": "all",
+        "limit": 8,
+        "columns": 4,
+        "show_vendor": false,
+        "show_secondary_image": true,
+        "show_view_all": true,
+        "color_scheme": "default",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "story": {
+      "type": "image-with-text",
+      "settings": {
+        "image_first": true,
+        "eyebrow": "Our story",
+        "heading": "Designed in the studio, built to last",
+        "text": "<p>Modernist Interiors brings together clean lines, honest materials, and careful craftsmanship. Every piece is chosen to feel at home for decades.</p>",
+        "button_label": "About us",
+        "button_link": "shopify://pages/about",
+        "color_scheme": "alt",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Join our list",
+        "text": "<p>New arrivals, studio stories, and early access to sales.</p>",
+        "color_scheme": "default",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured",
+    "story",
+    "newsletter"
+  ]
+}

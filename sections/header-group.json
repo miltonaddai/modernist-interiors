@@ -1,0 +1,36 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "blocks": {
+        "a1": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free white-glove delivery on orders over $500"
+          }
+        }
+      },
+      "block_order": [
+        "a1"
+      ],
+      "settings": {
+        "color_scheme": "inverse"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "sticky": true,
+        "color_scheme": "default",
+        "logo_width": 140
+      }
+    }
+  },
+  "order": [
+    "announcement",
+    "header"
+  ]
+}

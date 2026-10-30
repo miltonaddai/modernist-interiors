@@ -1,0 +1,68 @@
+<section class="section" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width narrow">
+    <h1 class="h1 page-header">{{ 'cart.title' | t }}</h1>
+    {%- if cart.item_count > 0 -%}
+    <form action="{{ routes.cart_url }}" method="post" id="CartForm">
+      <table class="cart-table">
+        <thead><tr><th scope="col">{{ 'cart.product' | t }}</th><th scope="col">{{ 'cart.quantity' | t }}</th><th scope="col" class="right">{{ 'cart.total' | t }}</th></tr></thead>
+        <tbody>
+          {%- for item in cart.items -%}
+          <tr>
+            <td><div class="cart-item">
+              {%- if item.image -%}<a href="{{ item.url }}" class="cart-item__media">{{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: item.title }}</a>{%- endif -%}
+              <div><a href="{{ item.url }}" class="cart-item__title">{{ item.product.title }}</a>{%- unless item.product.has_only_default_variant -%}<p class="muted small">{{ item.variant.title }}</p>{%- endunless -%}<p class="small">{{ item.final_price | money }}</p></div>
+            </div></td>
+            <td><label for="Updates-{{ forloop.index }}" class="visually-hidden">{{ 'cart.quantity' | t }}</label><input id="Updates-{{ forloop.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" class="qty-input"> <a href="{{ item.url_to_remove }}" class="link small">{{ 'cart.remove' | t }}</a></td>
+            <td class="right">{{ item.final_line_price | money }}</td>
+          </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+      {%- if section.settings.show_note -%}<label for="CartNote" class="small">{{ 'cart.note' | t }}</label><textarea id="CartNote" name="note">{{ cart.note }}</textarea>{%- endif -%}
+      <div class="cart-summary">
+        <p class="drawer__total"><span>{{ 'cart.subtotal' | t }}</span><span>{{ cart.total_price | money_with_currency }}</span></p>
+        <p class="muted small">{{ 'cart.taxes' | t }}</p>
+        <div class="button-row"><button type="submit" name="update" class="button button--secondary">{{ 'cart.update' | t }}</button><button type="submit" name="checkout" class="button">{{ 'cart.checkout' | t }}</button></div>
+      </div>
+    </form>
+    {%- else -%}
+      <p>{{ 'cart.empty' | t }}</p><a class="button" href="{{ routes.all_products_collection_url }}">{{ 'cart.continue' | t }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "tag": "section",
+  "class": "section-main-cart",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_note",
+      "label": "Enable order note",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ]
+}
+{% endschema %}

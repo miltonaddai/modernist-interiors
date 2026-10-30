@@ -1,0 +1,167 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Modernist",
+    "theme_version": "1.0.0",
+    "theme_author": "Modernist Interiors",
+    "theme_documentation_url": "https://github.com/miltonaddai/modernist-interiors",
+    "theme_support_url": "https://github.com/miltonaddai/modernist-interiors/issues"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_background_alt",
+        "label": "Alternate background (sage)",
+        "default": "#EEF1EA"
+      },
+      {
+        "type": "color",
+        "id": "color_foreground",
+        "label": "Text",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent",
+        "default": "#262626"
+      },
+      {
+        "type": "color",
+        "id": "color_button",
+        "label": "Button background",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "color_button_text",
+        "label": "Button text",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Borders",
+        "default": "#DFDFDF"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "Sale badge",
+        "default": "#8B0000"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "label": "Heading font",
+        "default": "inter_n7"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Body font",
+        "default": "inter_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_letter_spacing",
+        "label": "Heading letter spacing",
+        "min": -5,
+        "max": 30,
+        "step": 1,
+        "default": -2
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_uppercase",
+        "label": "Uppercase headings",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Page width",
+        "min": 1000,
+        "max": 1800,
+        "step": 20,
+        "unit": "px",
+        "default": 1440
+      },
+      {
+        "type": "range",
+        "id": "button_radius",
+        "label": "Button corner radius",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "card_radius",
+        "label": "Image corner radius",
+        "min": 0,
+        "max": 24,
+        "step": 2,
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "checkbox",
+        "id": "animations",
+        "label": "Reveal sections on scroll",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart type",
+        "default": "drawer",
+        "options": [
+          {
+            "value": "drawer",
+            "label": "Drawer"
+          },
+          {
+            "value": "page",
+            "label": "Page"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  }
+]

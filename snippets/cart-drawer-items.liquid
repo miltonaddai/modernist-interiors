@@ -1,0 +1,31 @@
+{%- if cart.item_count == 0 -%}
+  <div class="drawer__empty">
+    <p>{{ 'cart.empty' | t }}</p>
+    <a class="button" href="{{ routes.all_products_collection_url }}">{{ 'cart.continue' | t }}</a>
+  </div>
+{%- else -%}
+  <ul class="cart-items" role="list">
+    {%- for item in cart.items -%}
+      <li class="cart-item">
+        {%- if item.image -%}<a href="{{ item.url }}" class="cart-item__media">{{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: item.title }}</a>{%- endif -%}
+        <div class="cart-item__info">
+          <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title }}</a>
+          {%- unless item.product.has_only_default_variant -%}<p class="muted small">{{ item.variant.title }}</p>{%- endunless -%}
+          <p class="small">{{ item.final_line_price | money }}</p>
+          <div class="qty" data-line="{{ forloop.index }}">
+            <button type="button" class="qty__btn" data-qty="{{ item.quantity | minus: 1 }}" aria-label="{{ 'cart.decrease' | t }}">&minus;</button>
+            <span class="qty__val" aria-live="polite">{{ item.quantity }}</span>
+            <button type="button" class="qty__btn" data-qty="{{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.increase' | t }}">+</button>
+            <button type="button" class="link small" data-qty="0">{{ 'cart.remove' | t }}</button>
+          </div>
+        </div>
+      </li>
+    {%- endfor -%}
+  </ul>
+  <div class="drawer__footer">
+    <div class="drawer__total"><span>{{ 'cart.subtotal' | t }}</span><span>{{ cart.total_price | money_with_currency }}</span></div>
+    <p class="muted small">{{ 'cart.taxes' | t }}</p>
+    <form action="{{ routes.cart_url }}" method="post"><button type="submit" name="checkout" class="button button--full">{{ 'cart.checkout' | t }}</button></form>
+    <a href="{{ routes.cart_url }}" class="link small center">{{ 'cart.view' | t }}</a>
+  </div>
+{%- endif -%}

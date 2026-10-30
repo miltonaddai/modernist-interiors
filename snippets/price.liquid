@@ -1,0 +1,18 @@
+{%- comment -%} Accepts: product, variant (optional) {%- endcomment -%}
+{%- liquid
+  if variant
+    assign p = variant.price
+    assign c = variant.compare_at_price
+  else
+    assign p = product.price
+    assign c = product.compare_at_price
+  endif
+-%}
+<div class="price{% if c > p %} price--sale{% endif %}">
+  {%- if product.price_varies and variant == blank -%}
+    <span class="price__current">{{ 'products.product.price_from' | t: price: p | money }}</span>
+  {%- else -%}
+    <span class="price__current">{{ p | default: 0 | money }}</span>
+  {%- endif -%}
+  {%- if c > p -%}<s class="price__compare"><span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>{{ c | money }}</s>{%- endif -%}
+</div>

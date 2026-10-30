@@ -1,0 +1,44 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "about": {
+          "type": "text",
+          "settings": {
+            "heading": "Modernist Interiors",
+            "text": "<p>Modern furniture and objects for considered living.</p>"
+          }
+        },
+        "shop": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": "main-menu"
+          }
+        },
+        "info": {
+          "type": "menu",
+          "settings": {
+            "heading": "Info",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": [
+        "about",
+        "shop",
+        "info"
+      ],
+      "settings": {
+        "show_payment": true,
+        "color_scheme": "default"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

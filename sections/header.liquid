@@ -1,0 +1,110 @@
+{%- assign menu = section.settings.menu -%}
+<header class="header{% if section.settings.sticky %} header--sticky{% endif %} scheme-{{ section.settings.color_scheme }}" data-header>
+  <div class="page-width header__inner">
+    <button type="button" class="icon-btn header__menu-toggle" aria-controls="MobileNav" aria-expanded="false" data-menu-toggle aria-label="{{ 'accessibility.menu' | t }}">{% render 'icon', icon: 'menu' %}</button>
+    <a href="{{ routes.root_url }}" class="header__logo">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 600 | image_tag: width: section.settings.logo_width, alt: shop.name, style: 'height:auto' }}
+      {%- else -%}<span class="header__wordmark">{{ shop.name }}</span>{%- endif -%}
+    </a>
+    <nav class="header__nav" aria-label="{{ 'accessibility.primary_nav' | t }}">
+      <ul class="header__menu" role="list">
+        {%- for link in menu.links -%}
+          <li class="header__item{% if link.links.size > 0 %} has-dropdown{% endif %}">
+            <a href="{{ link.url }}" class="header__link{% if link.active %} is-active{% endif %}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+            {%- if link.links.size > 0 -%}
+              <ul class="header__dropdown" role="list">
+                {%- for child in link.links -%}<li><a href="{{ child.url }}">{{ child.title }}</a></li>{%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+    <div class="header__icons">
+      <a href="{{ routes.search_url }}" class="icon-btn" data-search-toggle aria-label="{{ 'general.search' | t }}">{% render 'icon', icon: 'search' %}</a>
+      {%- if shop.customer_accounts_enabled -%}<a href="{{ routes.account_url }}" class="icon-btn hide-mobile" aria-label="{{ 'customer.account' | t }}">{% render 'icon', icon: 'account' %}</a>{%- endif -%}
+      <a href="{{ routes.cart_url }}" class="icon-btn cart-toggle" data-cart-toggle aria-label="{{ 'cart.title' | t }}">{% render 'icon', icon: 'cart' %}<span class="cart-count" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span></a>
+    </div>
+  </div>
+  <div class="search-bar" data-search-bar hidden>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="page-width search-bar__form">
+      <label for="HeaderSearch" class="visually-hidden">{{ 'general.search' | t }}</label>
+      <input id="HeaderSearch" type="search" name="q" placeholder="{{ 'general.search_placeholder' | t }}" autocomplete="off" data-predictive>
+      <input type="hidden" name="type" value="product">
+      <button type="submit" class="icon-btn" aria-label="{{ 'general.search' | t }}">{% render 'icon', icon: 'search' %}</button>
+    </form>
+    <div class="page-width predictive" data-predictive-results aria-live="polite"></div>
+  </div>
+  <nav id="MobileNav" class="mobile-nav" hidden aria-label="{{ 'accessibility.mobile_nav' | t }}">
+    <ul role="list">
+      {%- for link in menu.links -%}
+        <li><a href="{{ link.url }}">{{ link.title }}</a>
+          {%- if link.links.size > 0 -%}<ul role="list">{%- for child in link.links -%}<li><a href="{{ child.url }}">{{ child.title }}</a></li>{%- endfor -%}</ul>{%- endif -%}
+        </li>
+      {%- endfor -%}
+      {%- if shop.customer_accounts_enabled -%}<li><a href="{{ routes.account_url }}">{{ 'customer.account' | t }}</a></li>{%- endif -%}
+    </ul>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "min": 60,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Sticky header",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "alt",
+          "label": "Sage"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "header"
+    ]
+  }
+}
+{% endschema %}

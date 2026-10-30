@@ -1,0 +1,58 @@
+<article class="section" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width narrow">
+    <p class="eyebrow">{{ article.published_at | time_tag: format: 'date' }}</p>
+    <h1 class="h1">{{ article.title }}</h1>
+    {%- if section.settings.show_image and article.image -%}<div class="article__image">{{ article.image | image_url: width: 1800 | image_tag: sizes: '100vw', widths: '600, 900, 1200, 1800', alt: article.image.alt }}</div>{%- endif -%}
+    <div class="rte">{{ article.content }}</div>
+    {%- if blog.comments_enabled? -%}
+      <div class="comments">
+        <h2 class="h4">{{ 'blogs.comments' | t: count: article.comments_count }}</h2>
+        {%- for comment in article.comments -%}<div class="comment"><div class="rte">{{ comment.content }}</div><p class="muted small">{{ comment.author }}</p></div>{%- endfor -%}
+        {%- form 'new_comment', article, class: 'form-stack' -%}
+          {%- if form.posted_successfully? -%}<p class="form-success" role="status">{{ 'blogs.comment_posted' | t }}</p>{%- endif -%}
+          {{ form.errors | default_errors }}
+          <label for="CommentAuthor">{{ 'blogs.name' | t }}</label><input id="CommentAuthor" name="comment[author]" value="{{ form.author }}" required>
+          <label for="CommentEmail">{{ 'customer.email' | t }}</label><input id="CommentEmail" type="email" name="comment[email]" value="{{ form.email }}" required>
+          <label for="CommentBody">{{ 'blogs.message' | t }}</label><textarea id="CommentBody" name="comment[body]" required>{{ form.body }}</textarea>
+          <button type="submit" class="button">{{ 'blogs.post' | t }}</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Blog post",
+  "tag": "section",
+  "class": "section-main-article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show featured image",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ]
+}
+{% endschema %}

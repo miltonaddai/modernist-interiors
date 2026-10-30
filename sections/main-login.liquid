@@ -1,0 +1,35 @@
+<section class="section" style="--pt: 64px; --pb: 64px;">
+  <div class="page-width narrow">
+    <h1 class="h1 page-header">{{ 'customer.login' | t }}</h1>
+    <div id="RecoverForm" hidden>
+      <h2 class="h4">{{ 'customer.reset_title' | t }}</h2>
+      {%- form 'recover_customer_password', class: 'form-stack' -%}
+        {%- if form.posted_successfully? -%}<p class="form-success" role="status">{{ 'customer.reset_sent' | t }}</p>{%- endif -%}
+        {{ form.errors | default_errors }}
+        <label for="RecoverEmail">{{ 'customer.email' | t }}</label><input id="RecoverEmail" type="email" name="email" autocomplete="email" required>
+        <button class="button">{{ 'customer.submit' | t }}</button>
+        <button type="button" class="link small" data-toggle-recover>{{ 'customer.cancel' | t }}</button>
+      {%- endform -%}
+    </div>
+    <div id="LoginForm">
+    {%- form 'customer_login', class: 'form-stack' -%}
+      {{ form.errors | default_errors }}
+      <label for="LoginEmail">{{ 'customer.email' | t }}</label><input id="LoginEmail" type="email" name="customer[email]" autocomplete="email" required>
+      {%- if form.password_needed -%}<label for="LoginPassword">{{ 'customer.password' | t }}</label><input id="LoginPassword" type="password" name="customer[password]" autocomplete="current-password" required>
+      <button type="button" class="link small" data-toggle-recover>{{ 'customer.forgot' | t }}</button>{%- endif -%}
+      <button class="button">{{ 'customer.sign_in' | t }}</button>
+      <a href="{{ routes.account_register_url }}" class="link small">{{ 'customer.create_account' | t }}</a>
+    {%- endform -%}
+    {%- if shop.checkout.guest_login -%}{%- form 'guest_login' -%}<button class="button button--secondary">{{ 'customer.guest' | t }}</button>{%- endform -%}{%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Login",
+  "tag": "section",
+  "class": "section-main-login",
+  "settings": []
+}
+{% endschema %}

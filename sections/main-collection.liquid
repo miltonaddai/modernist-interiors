@@ -1,0 +1,87 @@
+{%- paginate collection.products by section.settings.per_page -%}
+<section class="section" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width">
+    <header class="page-header">
+      <h1 class="h1">{{ collection.title }}</h1>
+      {%- if section.settings.show_description and collection.description != blank -%}<div class="rte muted">{{ collection.description }}</div>{%- endif -%}
+    </header>
+    <div class="toolbar">
+      <p class="muted small">{{ 'collections.count' | t: count: collection.products_count }}</p>
+      {%- if section.settings.enable_sorting -%}
+      {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+      <form class="sort">
+        <label for="SortBy" class="small">{{ 'collections.sort_by' | t }}</label>
+        <select id="SortBy" name="sort_by" data-autosubmit>
+          {%- for option in collection.sort_options -%}<option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name }}</option>{%- endfor -%}
+        </select>
+      </form>
+      {%- endif -%}
+    </div>
+    <ul class="grid grid--{{ section.settings.columns }}" role="list">
+      {%- for product in collection.products -%}<li class="reveal">{% render 'product-card', product: product, show_secondary_image: true %}</li>
+      {%- else -%}<li class="muted">{{ 'collections.empty' | t }}</li>{%- endfor -%}
+    </ul>
+    {% render 'pagination', paginate: paginate %}
+  </div>
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection products",
+  "tag": "section",
+  "class": "section-main-collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Enable sorting",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ]
+}
+{% endschema %}

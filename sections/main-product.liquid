@@ -1,0 +1,131 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<section class="section product" style="--pt: 32px; --pb: 64px;" data-product-section>
+  <div class="page-width product__grid">
+    <div class="product__media">
+      {%- for media in product.media -%}
+        <div class="product__media-item">
+          {%- case media.media_type -%}
+            {%- when 'image' -%}{{ media | image_url: width: 1800 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 60vw, 100vw', widths: '600, 900, 1200, 1800', alt: media.alt }}
+            {%- when 'video', 'external_video' -%}{{ media | media_tag: image_size: '1200x' }}
+            {%- when 'model' -%}{{ media | model_viewer_tag }}
+          {%- endcase -%}
+        </div>
+      {%- else -%}<div class="product__media-item">{{ 'product-1' | placeholder_svg_tag: 'placeholder' }}</div>
+      {%- endfor -%}
+    </div>
+    <div class="product__info">
+      <div class="product__sticky">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'vendor' -%}<p class="eyebrow" {{ block.shopify_attributes }}>{{ product.vendor }}</p>
+            {%- when 'title' -%}<h1 class="h2 product__title" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+            {%- when 'price' -%}<div data-price {{ block.shopify_attributes }}>{% render 'price', product: product, variant: current_variant %}</div>
+            {%- when 'description' -%}<div class="rte product__desc" {{ block.shopify_attributes }}>{{ product.description }}</div>
+            {%- when 'buy_buttons' -%}
+              <div {{ block.shopify_attributes }}>
+              {%- form 'product', product, class: 'product-form', data-product-form: '' -%}
+                {%- unless product.has_only_default_variant -%}
+                  {%- for option in product.options_with_values -%}
+                    {%- assign opt_index = forloop.index -%}
+                    <fieldset class="option">
+                      <legend>{{ option.name }}</legend>
+                      <div class="option__values">
+                        {%- for value in option.values -%}
+                          <input type="radio" id="Opt-{{ section.id }}-{{ opt_index }}-{{ forloop.index }}" name="option{{ opt_index }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %} data-option>
+                          <label for="Opt-{{ section.id }}-{{ opt_index }}-{{ forloop.index }}">{{ value }}</label>
+                        {%- endfor -%}
+                      </div>
+                    </fieldset>
+                  {%- endfor -%}
+                {%- endunless -%}
+                <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+                <div class="product-form__row">
+                  <label for="Qty-{{ section.id }}" class="visually-hidden">{{ 'products.product.quantity' | t }}</label>
+                  <input id="Qty-{{ section.id }}" type="number" name="quantity" value="1" min="1" class="qty-input">
+                  <button type="submit" name="add" class="button button--full" data-add{% unless current_variant.available %} disabled{% endunless %}>
+                    {%- if current_variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+                  </button>
+                </div>
+                {%- if block.settings.show_dynamic_checkout -%}{{ form | payment_button }}{%- endif -%}
+                <p class="form-error" role="alert" data-error hidden></p>
+              {%- endform -%}
+              <script type="application/json" data-variants>{{ product.variants | json }}</script>
+              </div>
+            {%- when 'collapsible' -%}
+              <details class="accordion" {{ block.shopify_attributes }}>
+                <summary>{{ block.settings.heading }}</summary>
+                <div class="rte">{{ block.settings.content }}{{ block.settings.page.content }}</div>
+              </details>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+<script type="application/ld+json">{{ product | structured_data }}</script>
+
+{% schema %}
+{
+  "name": "Product information",
+  "tag": "section",
+  "class": "section-main-product",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "vendor",
+      "name": "Vendor",
+      "limit": 1
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "label": "Show dynamic checkout buttons",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "collapsible",
+      "name": "Collapsible row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Dimensions & care"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Content from page"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

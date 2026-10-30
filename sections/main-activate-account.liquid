@@ -1,0 +1,21 @@
+<section class="section" style="--pt: 64px; --pb: 64px;">
+  <div class="page-width narrow">
+    <h1 class="h1 page-header">{{ 'customer.activate' | t }}</h1>
+    {%- form 'activate_customer_password', class: 'form-stack' -%}
+      {{ form.errors | default_errors }}
+      <label for="ActPw">{{ 'customer.password' | t }}</label><input id="ActPw" type="password" name="customer[password]" autocomplete="new-password" required>
+      <label for="ActPw2">{{ 'customer.password_confirm' | t }}</label><input id="ActPw2" type="password" name="customer[password_confirmation]" autocomplete="new-password" required>
+      <button class="button">{{ 'customer.activate' | t }}</button>
+      <button class="button button--secondary" name="decline">{{ 'customer.decline' | t }}</button>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Activate account",
+  "tag": "section",
+  "class": "section-main-activate-account",
+  "settings": []
+}
+{% endschema %}

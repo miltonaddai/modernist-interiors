@@ -1,0 +1,28 @@
+<section class="section" style="--pt: 64px; --pb: 64px;">
+  <div class="page-width narrow">
+    <h1 class="h1 page-header">{{ 'customer.order' | t }} {{ order.name }}</h1>
+    <p class="muted"><a href="{{ routes.account_url }}" class="link">{{ 'customer.back' | t }}</a> &middot; {{ order.created_at | time_tag: format: 'date_at_time' }}</p>
+    {%- if order.cancelled -%}<p class="form-error">{{ 'customer.cancelled' | t }}</p>{%- endif -%}
+    <table class="cart-table"><thead><tr><th scope="col">{{ 'cart.product' | t }}</th><th scope="col">{{ 'cart.quantity' | t }}</th><th scope="col" class="right">{{ 'cart.total' | t }}</th></tr></thead><tbody>
+      {%- for line_item in order.line_items -%}<tr><td>{{ line_item.title | link_to: line_item.product.url }}{%- if line_item.fulfillment -%}<br><span class="muted small">{{ line_item.fulfillment.tracking_company }} {{ line_item.fulfillment.tracking_number }}</span>{%- endif -%}</td><td>{{ line_item.quantity }}</td><td class="right">{{ line_item.final_line_price | money }}</td></tr>{%- endfor -%}
+    </tbody><tfoot>
+      <tr><td colspan="2">{{ 'cart.subtotal' | t }}</td><td class="right">{{ order.line_items_subtotal_price | money }}</td></tr>
+      {%- for shipping_method in order.shipping_methods -%}<tr><td colspan="2">{{ shipping_method.title }}</td><td class="right">{{ shipping_method.price | money }}</td></tr>{%- endfor -%}
+      {%- for tax_line in order.tax_lines -%}<tr><td colspan="2">{{ tax_line.title }}</td><td class="right">{{ tax_line.price | money }}</td></tr>{%- endfor -%}
+      <tr><td colspan="2"><strong>{{ 'cart.total' | t }}</strong></td><td class="right"><strong>{{ order.total_price | money_with_currency }}</strong></td></tr>
+    </tfoot></table>
+    <div class="grid grid--2">
+      <div><h2 class="h4">{{ 'customer.billing' | t }}</h2>{{ order.billing_address | format_address }}</div>
+      {%- if order.shipping_address -%}<div><h2 class="h4">{{ 'customer.shipping' | t }}</h2>{{ order.shipping_address | format_address }}</div>{%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Order",
+  "tag": "section",
+  "class": "section-main-order",
+  "settings": []
+}
+{% endschema %}

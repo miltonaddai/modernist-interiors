@@ -1,0 +1,54 @@
+{%- paginate blog.articles by 9 -%}
+<section class="section" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width">
+    <h1 class="h1 page-header">{{ blog.title }}</h1>
+    <ul class="grid grid--3" role="list">
+      {%- for article in blog.articles -%}
+        <li class="reveal"><article class="article-card">
+          <a href="{{ article.url }}" class="card__media" aria-label="{{ article.title | escape }}">{%- if article.image -%}{{ article.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: article.title }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder' }}{%- endif -%}</a>
+          <p class="eyebrow">{{ article.published_at | time_tag: format: 'date' }}</p>
+          <h2 class="h4"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+          {%- if section.settings.show_excerpt -%}<p class="muted small">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>{%- endif -%}
+        </article></li>
+      {%- endfor -%}
+    </ul>
+    {% render 'pagination', paginate: paginate %}
+  </div>
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "tag": "section",
+  "class": "section-main-blog",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show excerpt",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ]
+}
+{% endschema %}

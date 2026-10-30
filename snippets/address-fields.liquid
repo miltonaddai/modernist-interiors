@@ -1,0 +1,12 @@
+{%- comment -%} Address form fields. Accepts: form, id {%- endcomment -%}
+<label for="AddrFirst-{{ id }}">{{ 'customer.first_name' | t }}</label><input id="AddrFirst-{{ id }}" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name">
+<label for="AddrLast-{{ id }}">{{ 'customer.last_name' | t }}</label><input id="AddrLast-{{ id }}" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name">
+<label for="AddrCompany-{{ id }}">{{ 'customer.company' | t }}</label><input id="AddrCompany-{{ id }}" name="address[company]" value="{{ form.company }}" autocomplete="organization">
+<label for="AddrA1-{{ id }}">{{ 'customer.address1' | t }}</label><input id="AddrA1-{{ id }}" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1">
+<label for="AddrA2-{{ id }}">{{ 'customer.address2' | t }}</label><input id="AddrA2-{{ id }}" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2">
+<label for="AddrCity-{{ id }}">{{ 'customer.city' | t }}</label><input id="AddrCity-{{ id }}" name="address[city]" value="{{ form.city }}" autocomplete="address-level2">
+<label for="AddrCountry-{{ id }}">{{ 'customer.country' | t }}</label><select id="AddrCountry-{{ id }}" name="address[country]" autocomplete="country">{{ all_country_option_tags }}</select>
+<label for="AddrProvince-{{ id }}">{{ 'customer.province' | t }}</label><input id="AddrProvince-{{ id }}" name="address[province]" value="{{ form.province }}" autocomplete="address-level1">
+<label for="AddrZip-{{ id }}">{{ 'customer.zip' | t }}</label><input id="AddrZip-{{ id }}" name="address[zip]" value="{{ form.zip }}" autocomplete="postal-code">
+<label for="AddrPhone-{{ id }}">{{ 'customer.phone' | t }}</label><input id="AddrPhone-{{ id }}" type="tel" name="address[phone]" value="{{ form.phone }}" autocomplete="tel">
+<label class="checkbox"><input type="checkbox" name="address[default]" value="1"{% if form.set_as_default_checkbox %} checked{% endif %}> {{ 'customer.set_default' | t }}</label>

@@ -1,0 +1,23 @@
+{%- comment -%} Renders a product card. Accepts: product, show_vendor, show_secondary_image {%- endcomment -%}
+<article class="card">
+  <a href="{{ product.url | default: '#' }}" class="card__media" aria-label="{{ product.title | default: 'Product' | escape }}">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 25vw, 50vw', widths: '360, 540, 720, 900', class: 'card__img', alt: product.featured_media.alt }}
+      {%- if show_secondary_image and product.media[1] -%}
+        {{ product.media[1] | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 25vw, 50vw', widths: '360, 540, 720, 900', class: 'card__img card__img--hover', alt: '' }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder card__img' }}
+    {%- endif -%}
+    {%- if product != blank and product.available == false -%}
+      <span class="badge">{{ 'products.product.sold_out' | t }}</span>
+    {%- elsif product.compare_at_price > product.price -%}
+      <span class="badge badge--sale">{{ 'products.product.on_sale' | t }}</span>
+    {%- endif -%}
+  </a>
+  <div class="card__info">
+    {%- if show_vendor and product.vendor != blank -%}<p class="card__vendor">{{ product.vendor }}</p>{%- endif -%}
+    <h3 class="card__title"><a href="{{ product.url | default: '#' }}">{{ product.title | default: 'Product title' }}</a></h3>
+    {% render 'price', product: product %}
+  </div>
+</article>
