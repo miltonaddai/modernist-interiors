@@ -101,28 +101,28 @@
         "c1": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "lighting",
             "title": "Lighting"
           }
         },
         "c2": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "furniture",
             "title": "Furniture"
           }
         },
         "c3": {
           "type": "collection",
           "settings": {
-            "collection": "",
-            "title": "Home D\u00e9cor"
+            "collection": "home-decor",
+            "title": "Home Décor"
           }
         },
         "c4": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "rugs-textiles",
             "title": "Rugs & Textiles"
           }
         }
