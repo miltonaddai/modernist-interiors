@@ -62,7 +62,7 @@
         "v1": {
           "type": "value",
           "settings": {
-            "shape": "circle",
+            "shape": "truck",
             "title": "Free shipping",
             "text": "On every order, tracked to your door."
           }
@@ -70,7 +70,7 @@
         "v2": {
           "type": "value",
           "settings": {
-            "shape": "square",
+            "shape": "arch",
             "title": "Design classics",
             "text": "Bauhaus and mid-century forms, faithfully interpreted."
           }
