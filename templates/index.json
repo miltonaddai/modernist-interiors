@@ -48,6 +48,8 @@
         "bt"
       ],
       "settings": {
+        "image": "shopify://shop_images/bac8a135d7333df15aed8b8ecad89696dc147c399e60adc7e2b9358d4b0b68d0.jpg",
+        "focal": "center",
         "height": "large",
         "text_position": "bottom-left",
         "overlay": 30,
@@ -78,7 +80,7 @@
           "settings": {
             "shape": "triangle",
             "title": "30-day returns",
-            "text": "Live with it first. Send it back if it isn\u2019t right."
+            "text": "Live with it first. Send it back if it isn’t right."
           }
         }
       },
@@ -99,24 +101,28 @@
         "c1": {
           "type": "collection",
           "settings": {
+            "collection": "",
             "title": "Pendant lamps"
           }
         },
         "c2": {
           "type": "collection",
           "settings": {
+            "collection": "",
             "title": "Table & floor lamps"
           }
         },
         "c3": {
           "type": "collection",
           "settings": {
+            "collection": "",
             "title": "Furniture"
           }
         },
         "c4": {
           "type": "collection",
           "settings": {
+            "collection": "",
             "title": "Objects & accessories"
           }
         }
@@ -131,6 +137,7 @@
         "eyebrow": "Shop by category",
         "heading": "Built around the essentials",
         "columns": 4,
+        "mobile_layout": "carousel",
         "color_scheme": "default",
         "padding_top": 32,
         "padding_bottom": 64
@@ -159,7 +166,7 @@
         "image_first": true,
         "eyebrow": "Our ethos",
         "heading": "Less ornament. More meaning.",
-        "text": "<p>We curate pieces that honour the modernist idea: every curve, joint and material should earn its place. Honest glass, brushed steel, solid wood \u2014 designed to be lived with, not just looked at.</p>",
+        "text": "<p>We curate pieces that honour the modernist idea: every curve, joint and material should earn its place. Honest glass, brushed steel, solid wood — designed to be lived with, not just looked at.</p>",
         "button_label": "Read our story",
         "button_link": "shopify://pages/about",
         "color_scheme": "alt",
@@ -183,7 +190,7 @@
           "settings": {
             "label": "02",
             "title": "Honest materials",
-            "text": "Glass that looks like glass, steel that looks like steel \u2014 finishes that age with character."
+            "text": "Glass that looks like glass, steel that looks like steel — finishes that age with character."
           }
         },
         "p3": {
@@ -235,7 +242,7 @@
           "type": "quote",
           "settings": {
             "rating": 5,
-            "quote": "The glass pendant is a sculpture when it\u2019s off and pure warmth when it\u2019s on. Exactly what our dining room needed.",
+            "quote": "The glass pendant is a sculpture when it’s off and pure warmth when it’s on. Exactly what our dining room needed.",
             "author": "Hannah, London"
           }
         },
@@ -272,7 +279,7 @@
       "type": "newsletter",
       "settings": {
         "heading": "Join the studio",
-        "text": "<p>New arrivals, design stories and early access to sales \u2014 sent sparingly, like good design.</p>",
+        "text": "<p>New arrivals, design stories and early access to sales — sent sparingly, like good design.</p>",
         "color_scheme": "inverse",
         "padding_top": 80,
         "padding_bottom": 80
