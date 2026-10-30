@@ -163,6 +163,7 @@
     "story": {
       "type": "image-with-text",
       "settings": {
+        "image": "shopify://shop_images/4e5309b3b43250755f35b791c54800925e04ea83939cb5443e3279fe7ca5f568.jpg",
         "image_first": true,
         "eyebrow": "Our ethos",
         "heading": "Less ornament. More meaning.",
