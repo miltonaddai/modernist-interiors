@@ -102,28 +102,28 @@
           "type": "collection",
           "settings": {
             "collection": "",
-            "title": "Pendant lamps"
+            "title": "Lighting"
           }
         },
         "c2": {
           "type": "collection",
           "settings": {
             "collection": "",
-            "title": "Table & floor lamps"
+            "title": "Furniture"
           }
         },
         "c3": {
           "type": "collection",
           "settings": {
             "collection": "",
-            "title": "Furniture"
+            "title": "Home D\u00e9cor"
           }
         },
         "c4": {
           "type": "collection",
           "settings": {
             "collection": "",
-            "title": "Objects & accessories"
+            "title": "Rugs & Textiles"
           }
         }
       },
