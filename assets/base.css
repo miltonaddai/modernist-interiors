@@ -377,3 +377,7 @@ h1,h2,h3,.h1,.h2,.h-xl,.h-lg{overflow-wrap:break-word;hyphens:manual}
   .values__title{font-size:.875rem;margin:.6rem 0 .2rem;line-height:1.3}
   .values__item .small{font-size:.75rem;line-height:1.45;margin:0}
 }
+.values__svg{display:block;width:28px;height:28px;margin:0 auto}
+.values__icon{display:block;margin:0 auto}
+.values__svg--wide{width:42px}
+@media (max-width:749px){.values__svg{width:24px;height:24px}.values__svg--wide{width:36px}}
