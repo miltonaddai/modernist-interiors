@@ -367,3 +367,13 @@ h1,h2,h3,.h1,.h2,.h-xl,.h-lg{overflow-wrap:break-word;hyphens:manual}
   .pdp-trust{font-size:.6875rem}
   .product{padding-bottom:5rem!important}
 }
+
+/* ===== Value props: compact 2-col grid on mobile, no horizontal scroll ===== */
+@media (max-width:749px){
+  .values{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem .75rem;overflow:visible}
+  .values__item:last-child:nth-child(odd){grid-column:1/-1;max-width:60%;justify-self:center}
+  .values__icon{width:24px;height:24px}
+  .values__icon--triangle{width:0;height:0;border-left-width:14px;border-right-width:14px;border-bottom-width:24px}
+  .values__title{font-size:.875rem;margin:.6rem 0 .2rem;line-height:1.3}
+  .values__item .small{font-size:.75rem;line-height:1.45;margin:0}
+}
