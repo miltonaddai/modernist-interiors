@@ -1,73 +1,151 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
-<section class="section product" style="--pt: 32px; --pb: 64px;" data-product-section>
+{%- assign form_id = 'ProductForm-' | append: section.id -%}
+<section class="section product" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;" data-product-section data-section-id="{{ section.id }}">
   <div class="page-width product__grid">
     <div class="product__gallery">
-    <div class="product__media" data-gallery>
-      {%- for media in product.media -%}
-        <div class="product__media-item">
-          {%- liquid
-            assign lazy_val = 'lazy'
-            if forloop.first
-              assign lazy_val = 'eager'
-            endif
-          -%}
-          {%- case media.media_type -%}
-            {%- when 'image' -%}{{ media | image_url: width: 1800 | image_tag: loading: lazy_val, sizes: '(min-width: 990px) 55vw, 100vw', widths: '400, 600, 800, 1100, 1500, 1800', alt: media.alt }}
-            {%- when 'video', 'external_video' -%}{{ media | media_tag: image_size: '1200x' }}
-            {%- when 'model' -%}{{ media | model_viewer_tag }}
-          {%- endcase -%}
-        </div>
-      {%- else -%}<div class="product__media-item">{{ 'product-1' | placeholder_svg_tag: 'placeholder' }}</div>
-      {%- endfor -%}
-    </div>
-    {%- if product.media.size > 1 -%}
-      <div class="product__dots" data-dots aria-hidden="true">
-        {%- for media in product.media -%}<span class="product__dot{% if forloop.first %} is-active{% endif %}"></span>{%- endfor -%}
+      <div class="product__media" data-gallery>
+        {%- for media in product.media -%}
+          <div class="product__media-item" data-media-index="{{ forloop.index0 }}">
+            {%- liquid
+              assign lazy_val = 'lazy'
+              if forloop.first
+                assign lazy_val = 'eager'
+              endif
+            -%}
+            {%- case media.media_type -%}
+              {%- when 'image' -%}{{ media | image_url: width: 1800 | image_tag: loading: lazy_val, sizes: '(min-width: 990px) 55vw, 100vw', widths: '400, 600, 800, 1100, 1500, 1800', alt: media.alt }}
+              {%- when 'video', 'external_video' -%}{{ media | media_tag: image_size: '1200x' }}
+              {%- when 'model' -%}{{ media | model_viewer_tag }}
+            {%- endcase -%}
+          </div>
+        {%- else -%}<div class="product__media-item">{{ 'product-1' | placeholder_svg_tag: 'placeholder' }}</div>
+        {%- endfor -%}
       </div>
-    {%- endif -%}
+      {%- if product.media.size > 1 -%}
+        <div class="product__dots" aria-hidden="true">
+          {%- for media in product.media -%}<span class="product__dot{% if forloop.first %} is-active{% endif %}"></span>{%- endfor -%}
+        </div>
+        <ul class="product__thumbs" role="list">
+          {%- for media in product.media -%}
+            <li><button type="button" class="product__thumb{% if forloop.first %} is-active{% endif %}" data-thumb="{{ forloop.index0 }}" aria-label="Show image {{ forloop.index }}">{{ media.preview_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}</button></li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
     </div>
+
     <div class="product__info">
       <div class="product__sticky">
         {%- for block in section.blocks -%}
           {%- case block.type -%}
+            {%- when '@app' -%}{% render block %}
             {%- when 'vendor' -%}<p class="eyebrow" {{ block.shopify_attributes }}>{{ product.vendor }}</p>
             {%- when 'title' -%}<h1 class="h2 product__title" {{ block.shopify_attributes }}>{{ product.title }}</h1>
-            {%- when 'price' -%}<div data-price {{ block.shopify_attributes }}>{% render 'price', product: product, variant: current_variant %}</div>
-            {%- when 'description' -%}<div class="rte product__desc" {{ block.shopify_attributes }}>{{ product.description }}</div>
-            {%- when 'buy_buttons' -%}
-              <div {{ block.shopify_attributes }}>
-              {%- form 'product', product, class: 'product-form', data-product-form: '' -%}
-                {%- unless product.has_only_default_variant -%}
+            {%- when 'rating' -%}
+              {%- assign rating = product.metafields.reviews.rating.value -%}
+              {%- assign rating_count = product.metafields.reviews.rating_count.value | default: 0 -%}
+              {%- if rating != blank and rating_count > 0 -%}
+                {%- assign pct = rating.rating | divided_by: rating.scale_max | times: 100 -%}
+                <a href="#reviews" class="pdp-rating" {{ block.shopify_attributes }}>
+                  <span class="pdp-rating__stars" style="--pct: {{ pct }}%;" aria-hidden="true"></span>
+                  <span class="small">{{ rating.rating | round: 1 }} ({{ rating_count }})</span>
+                  <span class="visually-hidden">{{ rating.rating }} out of {{ rating.scale_max }} stars</span>
+                </a>
+              {%- endif -%}
+            {%- when 'price' -%}<div class="pdp-price" data-price {{ block.shopify_attributes }}>{% render 'price', product: product, variant: current_variant %}</div>
+            {%- when 'text' -%}<div class="rte pdp-text" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+            {%- when 'variant_picker' -%}
+              {%- unless product.has_only_default_variant -%}
+                <div class="pdp-variants" {{ block.shopify_attributes }}>
                   {%- for option in product.options_with_values -%}
                     {%- assign opt_index = forloop.index -%}
                     <fieldset class="option">
-                      <legend>{{ option.name }}</legend>
+                      <legend>{{ option.name }}: <span class="option__selected">{{ option.selected_value }}</span></legend>
                       <div class="option__values">
                         {%- for value in option.values -%}
-                          <input type="radio" id="Opt-{{ section.id }}-{{ opt_index }}-{{ forloop.index }}" name="option{{ opt_index }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %} data-option>
+                          <input type="radio" form="{{ form_id }}" id="Opt-{{ section.id }}-{{ opt_index }}-{{ forloop.index }}" name="option{{ opt_index }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %} data-option>
                           <label for="Opt-{{ section.id }}-{{ opt_index }}-{{ forloop.index }}">{{ value }}</label>
                         {%- endfor -%}
                       </div>
                     </fieldset>
                   {%- endfor -%}
-                {%- endunless -%}
-                <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
-                <div class="product-form__row">
-                  <label for="Qty-{{ section.id }}" class="visually-hidden">{{ 'products.product.quantity' | t }}</label>
-                  <input id="Qty-{{ section.id }}" type="number" name="quantity" value="1" min="1" class="qty-input">
-                  <button type="submit" name="add" class="button button--full" data-add{% unless current_variant.available %} disabled{% endunless %}>
-                    {%- if current_variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
-                  </button>
                 </div>
-                {%- if block.settings.show_dynamic_checkout -%}{{ form | payment_button }}{%- endif -%}
-                <p class="form-error" role="alert" data-error hidden></p>
-              {%- endform -%}
+              {%- endunless -%}
               <script type="application/json" data-variants>{{ product.variants | json }}</script>
+            {%- when 'buy_buttons' -%}
+              <div class="pdp-buy" {{ block.shopify_attributes }}>
+                {%- form 'product', product, id: form_id, class: 'product-form', data-product-form: '' -%}
+                  <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+                  <div class="product-form__row">
+                    <div class="qty" data-qty>
+                      <button type="button" class="qty__step" data-step="-1" aria-label="Decrease quantity">&minus;</button>
+                      <label for="Qty-{{ section.id }}" class="visually-hidden">{{ 'products.product.quantity' | t }}</label>
+                      <input id="Qty-{{ section.id }}" type="number" name="quantity" value="1" min="1" inputmode="numeric" class="qty-input">
+                      <button type="button" class="qty__step" data-step="1" aria-label="Increase quantity">+</button>
+                    </div>
+                    <button type="submit" name="add" class="button button--full" data-add data-label="{{ 'products.product.add_to_cart' | t }}"{% unless current_variant.available %} disabled{% endunless %}>
+                      {%- if current_variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+                    </button>
+                  </div>
+                  {%- if block.settings.show_dynamic_checkout -%}<div class="pdp-dynamic">{{ form | payment_button }}</div>{%- endif -%}
+                  <p class="form-error" role="alert" data-error hidden></p>
+                {%- endform -%}
               </div>
+            {%- when 'low_stock' -%}
+              {%- liquid
+                assign v = current_variant
+                assign show_low = false
+                if v.inventory_management == 'shopify' and v.inventory_policy == 'deny' and v.inventory_quantity > 0 and v.inventory_quantity <= block.settings.threshold
+                  assign show_low = true
+                endif
+              -%}
+              <div class="pdp-note pdp-low" data-low-stock {{ block.shopify_attributes }}>
+                {%- if show_low -%}<span class="pdp-dot" aria-hidden="true"></span><span>{{ block.settings.message | replace: '[count]', v.inventory_quantity }}</span>
+                {%- elsif request.design_mode -%}<span class="pdp-muted">Low-stock notice hidden: stock isn't tracked for this variant, or is above {{ block.settings.threshold }}.</span>{%- endif -%}
+              </div>
+            {%- when 'ship_cutoff' -%}
+              <div class="pdp-note pdp-cutoff" data-cutoff data-hour="{{ block.settings.cutoff_hour }}" data-offset="{{ 'now' | date: '%z' }}" data-biz="{{ block.settings.business_days_only }}" data-before="{{ block.settings.text_before | escape }}" data-after="{{ block.settings.text_after | escape }}" {{ block.shopify_attributes }}>
+                <svg class="pdp-ico" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <span data-cutoff-text>{{ block.settings.text_fallback }}</span>
+              </div>
+            {%- when 'delivery_estimate' -%}
+              <div class="pdp-note pdp-delivery" data-delivery data-min="{{ block.settings.min_days | plus: block.settings.processing_days }}" data-max="{{ block.settings.max_days | plus: block.settings.processing_days }}" data-biz="{{ block.settings.business_days }}" data-label="{{ block.settings.label | escape }}" {{ block.shopify_attributes }}>
+                <svg class="pdp-ico" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+                <span data-delivery-text>{{ block.settings.label | replace: '[range]', '' }} {{ block.settings.min_days }}–{{ block.settings.max_days }} {% if block.settings.business_days %}business {% endif %}days</span>
+              </div>
+            {%- when 'free_shipping' -%}
+              <div class="pdp-note pdp-free" {{ block.shopify_attributes }}>
+                <svg class="pdp-ico" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12l5 5L20 6"/></svg>
+                {%- assign threshold_cents = block.settings.threshold | times: 100 -%}
+                {%- if block.settings.threshold == 0 -%}<span>{{ block.settings.text_always }}</span>
+                {%- else -%}<span>{{ block.settings.text_threshold | replace: '[amount]', threshold_cents | money_without_trailing_zeros }}</span>{%- endif -%}
+              </div>
+            {%- when 'trust_row' -%}
+              <ul class="pdp-trust" role="list" {{ block.shopify_attributes }}>
+                {%- for i in (1..3) -%}
+                  {%- capture key %}item_{{ i }}{% endcapture -%}
+                  {%- if block.settings[key] != blank -%}
+                    <li><span class="pdp-trust__shape pdp-trust__shape--{{ i }}" aria-hidden="true"></span>{{ block.settings[key] }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- when 'description' -%}
+              {%- if product.description != blank -%}
+                <details class="accordion" {% if block.settings.open %}open{% endif %} {{ block.shopify_attributes }}>
+                  <summary>{{ block.settings.heading }}</summary>
+                  <div class="rte product__desc">{{ product.description }}</div>
+                </details>
+              {%- endif -%}
             {%- when 'collapsible' -%}
+              {%- liquid
+                assign mf_content = blank
+                if block.settings.metafield_key != blank
+                  assign mf_parts = block.settings.metafield_key | split: '.'
+                  assign mf_content = product.metafields[mf_parts[0]][mf_parts[1]]
+                endif
+              -%}
               <details class="accordion" {{ block.shopify_attributes }}>
                 <summary>{{ block.settings.heading }}</summary>
-                <div class="rte">{{ block.settings.content }}{{ block.settings.page.content }}</div>
+                <div class="rte">{% if mf_content != blank %}{{ mf_content | metafield_tag }}{% else %}{{ block.settings.content }}{{ block.settings.page.content }}{% endif %}</div>
               </details>
           {%- endcase -%}
         {%- endfor -%}
@@ -75,12 +153,11 @@
     </div>
   </div>
 </section>
-{%- if current_variant.available -%}
+
 <div class="sticky-atc" data-sticky-atc hidden>
   <div class="sticky-atc__info"><span class="sticky-atc__title">{{ product.title }}</span><span class="small" data-sticky-price>{{ current_variant.price | money }}</span></div>
-  <button type="button" class="button" data-sticky-add>{{ 'products.product.add_to_cart' | t }}</button>
+  <button type="button" class="button" data-sticky-add{% unless current_variant.available %} disabled{% endunless %}>{% if current_variant.available %}{{ 'products.product.add_to_cart' | t }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</button>
 </div>
-{%- endif -%}
 <script type="application/ld+json">{{ product | structured_data }}</script>
 
 {% schema %}
@@ -88,63 +165,65 @@
   "name": "Product information",
   "tag": "section",
   "class": "section-main-product",
-  "settings": [],
+  "settings": [
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 }
+  ],
   "blocks": [
-    {
-      "type": "vendor",
-      "name": "Vendor",
-      "limit": 1
-    },
-    {
-      "type": "title",
-      "name": "Title",
-      "limit": 1
-    },
-    {
-      "type": "price",
-      "name": "Price",
-      "limit": 1
-    },
-    {
-      "type": "buy_buttons",
-      "name": "Buy buttons",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "checkbox",
-          "id": "show_dynamic_checkout",
-          "label": "Show dynamic checkout buttons",
-          "default": true
-        }
-      ]
-    },
-    {
-      "type": "description",
-      "name": "Description",
-      "limit": 1
-    },
-    {
-      "type": "collapsible",
-      "name": "Collapsible row",
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Heading",
-          "default": "Dimensions & care"
-        },
-        {
-          "type": "richtext",
-          "id": "content",
-          "label": "Content"
-        },
-        {
-          "type": "page",
-          "id": "page",
-          "label": "Content from page"
-        }
-      ]
-    }
+    { "type": "@app" },
+    { "type": "vendor", "name": "Vendor", "limit": 1 },
+    { "type": "title", "name": "Title", "limit": 1 },
+    { "type": "rating", "name": "Review stars", "limit": 1, "settings": [
+      { "type": "paragraph", "content": "Only shows when a reviews app fills the standard reviews.rating and reviews.rating_count metafields. Nothing appears without real reviews." }
+    ] },
+    { "type": "price", "name": "Price", "limit": 1 },
+    { "type": "text", "name": "Text", "settings": [
+      { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Designed with clean lines and honest materials.</p>" }
+    ] },
+    { "type": "variant_picker", "name": "Variant picker", "limit": 1 },
+    { "type": "buy_buttons", "name": "Buy buttons", "limit": 1, "settings": [
+      { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout buttons", "default": true }
+    ] },
+    { "type": "low_stock", "name": "Low stock (real)", "limit": 1, "settings": [
+      { "type": "paragraph", "content": "Shows only when the selected variant tracks inventory, doesn't allow overselling, and stock is at or below the threshold." },
+      { "type": "range", "id": "threshold", "label": "Show when stock is at or below", "min": 1, "max": 50, "step": 1, "default": 5 },
+      { "type": "text", "id": "message", "label": "Message ([count] = units left)", "default": "Only [count] left in stock" }
+    ] },
+    { "type": "ship_cutoff", "name": "Order cutoff", "limit": 1, "settings": [
+      { "type": "paragraph", "content": "Counts down to your real daily order cutoff in your store's time zone and resets every day. Only use it if orders really go to your supplier by this time." },
+      { "type": "range", "id": "cutoff_hour", "label": "Daily cutoff hour (24h, store time)", "min": 0, "max": 23, "step": 1, "default": 14 },
+      { "type": "checkbox", "id": "business_days_only", "label": "Business days only (skip Sat/Sun)", "default": true },
+      { "type": "text", "id": "text_before", "label": "Text ([time] = countdown)", "default": "Order within [time]" },
+      { "type": "text", "id": "text_after", "label": "Text ([day] = processing day)", "default": "to have it processed [day]." },
+      { "type": "text", "id": "text_fallback", "label": "Text if JavaScript is off", "default": "Orders are processed every business day." }
+    ] },
+    { "type": "delivery_estimate", "name": "Estimated delivery", "limit": 1, "settings": [
+      { "type": "range", "id": "processing_days", "label": "Processing days before shipping", "min": 0, "max": 7, "step": 1, "default": 2 },
+      { "type": "range", "id": "min_days", "label": "Shipping time: minimum days", "min": 1, "max": 30, "step": 1, "default": 5 },
+      { "type": "range", "id": "max_days", "label": "Shipping time: maximum days", "min": 1, "max": 40, "step": 1, "default": 9 },
+      { "type": "checkbox", "id": "business_days", "label": "Count business days only", "default": true },
+      { "type": "text", "id": "label", "label": "Text ([range] = date range)", "default": "Estimated delivery: [range]" }
+    ] },
+    { "type": "free_shipping", "name": "Free shipping note", "limit": 1, "settings": [
+      { "type": "number", "id": "threshold", "label": "Free shipping threshold (store currency, 0 = always free)", "default": 0 },
+      { "type": "text", "id": "text_always", "label": "Text when always free", "default": "Free tracked shipping" },
+      { "type": "text", "id": "text_threshold", "label": "Text with threshold ([amount])", "default": "Free tracked shipping on orders over [amount]" }
+    ] },
+    { "type": "trust_row", "name": "Trust row", "limit": 1, "settings": [
+      { "type": "text", "id": "item_1", "label": "Item 1", "default": "30-day returns" },
+      { "type": "text", "id": "item_2", "label": "Item 2", "default": "Secure checkout" },
+      { "type": "text", "id": "item_3", "label": "Item 3", "default": "Real support" }
+    ] },
+    { "type": "description", "name": "Description (accordion)", "limit": 1, "settings": [
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Description" },
+      { "type": "checkbox", "id": "open", "label": "Open by default", "default": true }
+    ] },
+    { "type": "collapsible", "name": "Collapsible row", "settings": [
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Dimensions & materials" },
+      { "type": "richtext", "id": "content", "label": "Content" },
+      { "type": "page", "id": "page", "label": "Content from page" },
+      { "type": "text", "id": "metafield_key", "label": "Product metafield (namespace.key)", "info": "Optional, e.g. custom.dimensions. When filled for a product, it replaces the content above." }
+    ] }
   ]
 }
 {% endschema %}

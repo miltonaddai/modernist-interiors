@@ -63,14 +63,21 @@
   const syncFooter = () => $$('[data-footer-details]').forEach((d) => { d.open = mq.matches; });
   syncFooter(); mq.addEventListener('change', syncFooter);
 
-  /* Product gallery dots */
+  /* Product gallery: swipe + dots on mobile, thumbnails on desktop */
   $$('[data-gallery]').forEach((g) => {
-    const dots = $$('.product__dot', g.parentElement);
-    if (!dots.length) return;
-    g.addEventListener('scroll', () => {
-      const i = Math.round(g.scrollLeft / g.clientWidth);
+    const wrap = g.parentElement;
+    const dots = $$('.product__dot', wrap);
+    const thumbs = $$('[data-thumb]', wrap);
+    const mark = (i) => {
       dots.forEach((d, n) => d.classList.toggle('is-active', n === i));
-    }, { passive: true });
+      thumbs.forEach((t, n) => t.classList.toggle('is-active', n === i));
+    };
+    g.addEventListener('scroll', () => mark(Math.round(g.scrollLeft / g.clientWidth)), { passive: true });
+    thumbs.forEach((t) => t.addEventListener('click', () => {
+      const i = +t.dataset.thumb;
+      g.scrollTo({ left: i * g.clientWidth, behavior: 'smooth' });
+      mark(i);
+    }));
   });
 
   /* Sticky add-to-cart (mobile) */
@@ -81,6 +88,42 @@
     new IntersectionObserver(([en]) => sticky.classList.toggle('is-visible', !en.isIntersecting && en.boundingClientRect.top < 0)).observe(mainAdd);
     $('[data-sticky-add]', sticky).addEventListener('click', () => mainAdd.click());
   }
+
+  /* Quantity steppers */
+  $$('[data-qty]').forEach((q) => {
+    const input = $('input', q);
+    $$('[data-step]', q).forEach((b) => b.addEventListener('click', () => {
+      input.value = Math.max(1, (parseInt(input.value, 10) || 1) + +b.dataset.step);
+    }));
+  });
+
+  /* Order cutoff countdown (real daily cutoff, store time zone) */
+  $$('[data-cutoff]').forEach((el) => {
+    const hour = +el.dataset.hour, biz = el.dataset.biz === 'true';
+    const z = el.dataset.offset || '+0000';
+    const off = (z[0] === '-' ? -1 : 1) * (parseInt(z.slice(1, 3), 10) * 60 + parseInt(z.slice(3, 5), 10));
+    const out = $('[data-cutoff-text]', el);
+    const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const isBiz = (d) => !biz || (d.getUTCDay() !== 0 && d.getUTCDay() !== 6);
+    const tick = () => {
+      const store = new Date(Date.now() + off * 60000);
+      const cut = new Date(store); cut.setUTCHours(hour, 0, 0, 0);
+      while (!isBiz(cut) || cut <= store) { cut.setUTCDate(cut.getUTCDate() + 1); cut.setUTCHours(hour, 0, 0, 0); }
+      const ms = cut - store, h = Math.floor(ms / 3600000), m = Math.floor((ms % 3600000) / 60000);
+      const day = cut.getUTCDate() === store.getUTCDate() ? 'today' : DAYS[cut.getUTCDay()];
+      const t = h ? `${h}h ${m}m` : `${m}m`;
+      out.innerHTML = el.dataset.before.replace('[time]', `<strong>${t}</strong>`) + ' ' + el.dataset.after.replace('[day]', `<strong>${day}</strong>`);
+    };
+    tick(); setInterval(tick, 30000);
+  });
+
+  /* Estimated delivery range */
+  $$('[data-delivery]').forEach((el) => {
+    const biz = el.dataset.biz === 'true';
+    const add = (n) => { const d = new Date(); while (n > 0) { d.setDate(d.getDate() + 1); const w = d.getDay(); if (!biz || (w !== 0 && w !== 6)) n--; } return d; };
+    const f = { month: 'short', day: 'numeric' };
+    $('[data-delivery-text]', el).innerHTML = el.dataset.label.replace('[range]', `<strong>${add(+el.dataset.min).toLocaleDateString(undefined, f)} – ${add(+el.dataset.max).toLocaleDateString(undefined, f)}</strong>`);
+  });
 
   /* Predictive search (Section Rendering API) */
   const pInput = $('[data-predictive]');
@@ -148,33 +191,47 @@
 
   /* Product form: variant selection + AJAX add to cart */
   $$('[data-product-form]').forEach((form) => {
-    const wrap = form.parentElement;
-    const variantsEl = $('[data-variants]', wrap);
+    const section = form.closest('[id^="shopify-section-"]') || document;
+    const variantsEl = $('[data-variants]', section);
     const variants = variantsEl ? JSON.parse(variantsEl.textContent) : [];
     const idInput = $('[data-variant-id]', form);
     const addBtn = $('[data-add]', form);
     const errorEl = $('[data-error]', form);
-    const addLabel = addBtn ? addBtn.textContent.trim() : '';
-    form.addEventListener('change', (e) => {
+    const addLabel = addBtn.dataset.label || addBtn.textContent.trim();
+    const stickyBtn = $('[data-sticky-add]');
+    const stickyPrice = $('[data-sticky-price]');
+    section.addEventListener('change', (e) => {
       if (!e.target.matches('[data-option]')) return;
-      const selected = $$('fieldset.option', form).map((fs) => ($('input:checked', fs) || {}).value);
+      const fs = e.target.closest('fieldset');
+      const lbl = fs && $('.option__selected', fs);
+      if (lbl) lbl.textContent = e.target.value;
+      const selected = $$('fieldset.option', section).map((f) => ($('input:checked', f) || {}).value);
       const v = variants.find((x) => x.options.every((o, i) => o === selected[i]));
-      if (!v) { addBtn.disabled = true; return; }
+      const available = !!(v && v.available);
+      addBtn.disabled = !available;
+      addBtn.textContent = v ? (available ? addLabel : 'Sold out') : 'Unavailable';
+      if (stickyBtn) { stickyBtn.disabled = !available; stickyBtn.textContent = addBtn.textContent; }
+      if (!v) return;
       idInput.value = v.id;
-      addBtn.disabled = !v.available;
-      addBtn.textContent = v.available ? addLabel : 'Sold out';
       const url = new URL(window.location.href);
       url.searchParams.set('variant', v.id);
       window.history.replaceState({}, '', url);
-      // Refresh price via Section Rendering API
-      const section = form.closest('[id^="shopify-section-"]');
-      if (section) {
+      if (v.featured_media) {
+        const g = $('[data-gallery]', section);
+        const i = $$('[data-media-index]', section).findIndex((m) => +m.dataset.mediaIndex === v.featured_media.position - 1);
+        if (g && i > -1) g.scrollTo({ left: i * g.clientWidth, behavior: 'smooth' });
+      }
+      // Refresh price, sticky price and real stock via Section Rendering API
+      if (section.id) {
         fetch(`${url.pathname}?variant=${v.id}&section_id=${section.id.replace('shopify-section-', '')}`)
           .then((r) => r.text())
           .then((html) => {
-            const fresh = new DOMParser().parseFromString(html, 'text/html').querySelector('[data-price]');
-            const cur = $('[data-price]', section);
-            if (fresh && cur) cur.innerHTML = fresh.innerHTML;
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            ['[data-price]', '[data-low-stock]', '[data-sticky-price]'].forEach((sel) => {
+              const fresh = $(sel, doc);
+              const cur = sel === '[data-sticky-price]' ? stickyPrice : $(sel, section);
+              if (fresh && cur) cur.innerHTML = fresh.innerHTML;
+            });
           }).catch(() => {});
       }
     });

@@ -12,66 +12,30 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "vendor",
-          "settings": {}
-        },
-        "title": {
-          "type": "title",
-          "settings": {}
-        },
-        "price": {
-          "type": "price",
-          "settings": {}
-        },
-        "buy": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": true
-          }
-        },
-        "desc": {
-          "type": "description",
-          "settings": {}
-        },
-        "dims": {
-          "type": "collapsible",
-          "settings": {
-            "heading": "Dimensions & materials",
-            "content": "<p>Full dimensions, materials and finishes are listed in the description above.</p>"
-          }
-        },
-        "ship": {
-          "type": "collapsible",
-          "settings": {
-            "heading": "Shipping & returns",
-            "content": "<p>Free tracked shipping on every order. 30-day returns — live with it first.</p>"
-          }
-        }
+        "vendor": { "type": "vendor", "settings": {} },
+        "title": { "type": "title", "settings": {} },
+        "rating": { "type": "rating", "settings": {} },
+        "price": { "type": "price", "settings": {} },
+        "text": { "type": "text", "settings": { "text": "<p>Clean lines, honest materials, made to be lived with.</p>" } },
+        "variants": { "type": "variant_picker", "settings": {} },
+        "buy": { "type": "buy_buttons", "settings": { "show_dynamic_checkout": true } },
+        "low_stock": { "type": "low_stock", "settings": { "threshold": 5, "message": "Only [count] left in stock" } },
+        "cutoff": { "type": "ship_cutoff", "settings": { "cutoff_hour": 14, "business_days_only": true, "text_before": "Order within [time]", "text_after": "to have it processed [day].", "text_fallback": "Orders are processed every business day." } },
+        "delivery": { "type": "delivery_estimate", "settings": { "processing_days": 2, "min_days": 5, "max_days": 9, "business_days": true, "label": "Estimated delivery: [range]" } },
+        "free_ship": { "type": "free_shipping", "settings": { "threshold": 0, "text_always": "Free tracked shipping", "text_threshold": "Free tracked shipping on orders over [amount]" } },
+        "trust": { "type": "trust_row", "settings": { "item_1": "30-day returns", "item_2": "Secure checkout", "item_3": "Real support" } },
+        "desc": { "type": "description", "settings": { "heading": "Description", "open": true } },
+        "dims": { "type": "collapsible", "settings": { "heading": "Dimensions & materials", "content": "<p>Full dimensions, materials and finishes are listed in the description.</p>", "metafield_key": "custom.dimensions" } },
+        "ship": { "type": "collapsible", "settings": { "heading": "Shipping & returns", "content": "<p>Free tracked shipping on every order. Orders are processed within 1–2 business days and usually arrive in 5–9 business days. 30-day returns: live with it first.</p>" } },
+        "care": { "type": "collapsible", "settings": { "heading": "Care", "content": "<p>Wipe with a soft, dry cloth. Avoid harsh cleaners and prolonged direct sunlight to protect finishes.</p>", "metafield_key": "custom.care" } }
       },
-      "block_order": [
-        "vendor",
-        "title",
-        "price",
-        "buy",
-        "desc",
-        "dims",
-        "ship"
-      ],
-      "settings": {}
+      "block_order": ["vendor", "title", "rating", "price", "text", "variants", "buy", "low_stock", "cutoff", "delivery", "free_ship", "trust", "desc", "dims", "ship", "care"],
+      "settings": { "padding_top": 32, "padding_bottom": 48 }
     },
     "related": {
       "type": "related-products",
-      "settings": {
-        "heading": "Pairs well with",
-        "limit": 3,
-        "padding_top": 32,
-        "padding_bottom": 64
-      }
+      "settings": { "heading": "You may also like", "limit": 4, "padding_top": 32, "padding_bottom": 64 }
     }
   },
-  "order": [
-    "main",
-    "related"
-  ]
+  "order": ["main", "related"]
 }
