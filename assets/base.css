@@ -312,3 +312,4 @@ h1,h2,h3,.h1,.h2,.h-xl,.h-lg{overflow-wrap:break-word;hyphens:manual}
   input,select,textarea{font-size:16px}
 }
 @media (min-width:750px){.footer__details>summary{pointer-events:none;list-style:none}.footer__details>summary .icon{display:none}.footer__details>summary::-webkit-details-marker{display:none}}
+@media (max-width:749px){.hero--small{min-height:340px}.hero--medium{min-height:420px}.hero--large,.hero--full{min-height:min(560px,72svh)}.hero__content{padding-top:2rem;padding-bottom:1.75rem}}
