@@ -8,12 +8,19 @@
         "a1": {
           "type": "announcement",
           "settings": {
-            "text": "Free white-glove delivery on orders over $500"
+            "text": "Free shipping on every order"
+          }
+        },
+        "a2": {
+          "type": "announcement",
+          "settings": {
+            "text": "Bauhaus-inspired design \u00b7 30-day returns"
           }
         }
       },
       "block_order": [
-        "a1"
+        "a1",
+        "a2"
       ],
       "settings": {
         "color_scheme": "inverse"

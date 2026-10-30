@@ -17,7 +17,7 @@
       </form>
       {%- endif -%}
     </div>
-    <ul class="grid grid--{{ section.settings.columns }}" role="list">
+    <ul class="grid grid--products" role="list" style="--cols-desktop: {{ section.settings.columns }}; --cols-mobile: {{ section.settings.columns_mobile }};">
       {%- for product in collection.products -%}<li class="reveal">{% render 'product-card', product: product, show_secondary_image: true %}</li>
       {%- else -%}<li class="muted">{{ 'collections.empty' | t }}</li>{%- endfor -%}
     </ul>
@@ -49,6 +49,22 @@
       "max": 4,
       "step": 1,
       "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
     },
     {
       "type": "checkbox",

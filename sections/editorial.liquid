@@ -1,0 +1,141 @@
+<section class="section scheme-{{ section.settings.color_scheme }}" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width editorial">
+    <div class="editorial__intro reveal">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2 class="h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.text != blank -%}<div class="rte">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}<a href="{{ section.settings.button_link | default: '#' }}" class="button button--secondary">{{ section.settings.button_label }}</a>{%- endif -%}
+    </div>
+    <ol class="editorial__points" role="list">
+      {%- for block in section.blocks -%}
+        <li class="reveal" {{ block.shopify_attributes }}>
+          <span class="editorial__num">{{ block.settings.label }}</span>
+          <h3 class="h4">{{ block.settings.title }}</h3>
+          <p class="muted">{{ block.settings.text }}</p>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Editorial",
+  "tag": "section",
+  "class": "section-editorial",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Bauhaus heritage"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A century-old idea, still ahead of its time"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Founded in Weimar in 1919, the Bauhaus school set out to unite art, craft and industry. Its lessons \u2014 clarity, honesty of material, geometry as beauty \u2014 still shape the pieces we choose today.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore the collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "alt",
+          "label": "Sage"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Principle",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Form follows function"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Every shape exists for a reason."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial",
+      "blocks": [
+        {
+          "type": "point"
+        },
+        {
+          "type": "point"
+        },
+        {
+          "type": "point"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

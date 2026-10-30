@@ -9,7 +9,7 @@
           "type": "text",
           "settings": {
             "heading": "Modernist Interiors",
-            "text": "<p>Modern furniture and objects for considered living.</p>"
+            "text": "<p>Bauhaus-inspired lighting, furniture and objects for modern homes. Designed with purpose, made to last.</p>"
           }
         },
         "shop": {
@@ -22,7 +22,7 @@
         "info": {
           "type": "menu",
           "settings": {
-            "heading": "Info",
+            "heading": "Studio",
             "menu": "footer"
           }
         }

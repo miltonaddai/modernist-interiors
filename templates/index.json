@@ -6,28 +6,29 @@
         "s": {
           "type": "subheading",
           "settings": {
-            "text": "Modernist Interiors"
+            "text": "Form follows function"
           }
         },
         "h": {
           "type": "heading",
           "settings": {
-            "heading": "Modern living, thoughtfully made",
+            "heading": "Objects with purpose. Lines with intent.",
             "size": "xl"
           }
         },
         "t": {
           "type": "text",
           "settings": {
-            "text": "<p>Furniture and objects designed to last a lifetime.</p>"
+            "text": "<p>Lighting, furniture and objects shaped by the Bauhaus belief that good design belongs in everyday life.</p>"
           }
         },
-        "b": {
+        "bt": {
           "type": "buttons",
           "settings": {
-            "label_1": "Shop now",
+            "label_1": "Shop the collection",
             "link_1": "shopify://collections/all",
-            "label_2": ""
+            "label_2": "Our design ethos",
+            "link_2": "shopify://pages/about"
           }
         }
       },
@@ -35,50 +36,235 @@
         "s",
         "h",
         "t",
-        "b"
+        "bt"
       ],
       "settings": {
         "height": "large",
         "text_position": "bottom-left",
-        "overlay": 25,
+        "overlay": 30,
         "color_scheme": "inverse"
+      }
+    },
+    "values": {
+      "type": "value-props",
+      "blocks": {
+        "v1": {
+          "type": "value",
+          "settings": {
+            "shape": "circle",
+            "title": "Free shipping",
+            "text": "On every order, tracked to your door."
+          }
+        },
+        "v2": {
+          "type": "value",
+          "settings": {
+            "shape": "square",
+            "title": "Design classics",
+            "text": "Bauhaus and mid-century forms, faithfully interpreted."
+          }
+        },
+        "v3": {
+          "type": "value",
+          "settings": {
+            "shape": "triangle",
+            "title": "30-day returns",
+            "text": "Live with it first. Send it back if it isn\u2019t right."
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "settings": {
+        "color_scheme": "default",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "categories": {
+      "type": "collection-list",
+      "blocks": {
+        "c1": {
+          "type": "collection",
+          "settings": {
+            "title": "Pendant lamps"
+          }
+        },
+        "c2": {
+          "type": "collection",
+          "settings": {
+            "title": "Table & floor lamps"
+          }
+        },
+        "c3": {
+          "type": "collection",
+          "settings": {
+            "title": "Furniture"
+          }
+        },
+        "c4": {
+          "type": "collection",
+          "settings": {
+            "title": "Objects & accessories"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {
+        "eyebrow": "Shop by category",
+        "heading": "Built around the essentials",
+        "columns": 4,
+        "color_scheme": "default",
+        "padding_top": 32,
+        "padding_bottom": 64
       }
     },
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Shop the collection",
+        "eyebrow": "Bestsellers",
+        "heading": "Design classics",
         "collection": "all",
-        "limit": 8,
-        "columns": 4,
+        "limit": 6,
+        "columns": 3,
+        "columns_mobile": "1",
         "show_vendor": false,
         "show_secondary_image": true,
         "show_view_all": true,
         "color_scheme": "default",
-        "padding_top": 64,
-        "padding_bottom": 64
+        "padding_top": 32,
+        "padding_bottom": 80
       }
     },
     "story": {
       "type": "image-with-text",
       "settings": {
         "image_first": true,
-        "eyebrow": "Our story",
-        "heading": "Designed in the studio, built to last",
-        "text": "<p>Modernist Interiors brings together clean lines, honest materials, and careful craftsmanship. Every piece is chosen to feel at home for decades.</p>",
-        "button_label": "About us",
+        "eyebrow": "Our ethos",
+        "heading": "Less ornament. More meaning.",
+        "text": "<p>We curate pieces that honour the modernist idea: every curve, joint and material should earn its place. Honest glass, brushed steel, solid wood \u2014 designed to be lived with, not just looked at.</p>",
+        "button_label": "Read our story",
         "button_link": "shopify://pages/about",
         "color_scheme": "alt",
         "padding_top": 0,
         "padding_bottom": 0
       }
     },
+    "heritage": {
+      "type": "editorial",
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "label": "01",
+            "title": "Form follows function",
+            "text": "Every shape exists for a reason. Nothing is added for decoration alone."
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "label": "02",
+            "title": "Honest materials",
+            "text": "Glass that looks like glass, steel that looks like steel \u2014 finishes that age with character."
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "label": "03",
+            "title": "Geometry as beauty",
+            "text": "Circles, squares and lines: the primary vocabulary of the Bauhaus, translated for modern rooms."
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {
+        "eyebrow": "Bauhaus heritage",
+        "heading": "A century-old idea, still ahead of its time",
+        "text": "<p>Founded in Weimar in 1919, the Bauhaus school set out to unite art, craft and industry. Its lessons still shape the pieces we choose today.</p>",
+        "button_label": "Explore the collection",
+        "button_link": "shopify://collections/all",
+        "color_scheme": "default",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "featured_2": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "New arrivals",
+        "heading": "Fresh from the studio",
+        "collection": "all",
+        "limit": 3,
+        "columns": 3,
+        "columns_mobile": "1",
+        "show_vendor": false,
+        "show_secondary_image": true,
+        "show_view_all": true,
+        "color_scheme": "alt",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "q1": {
+          "type": "quote",
+          "settings": {
+            "rating": 5,
+            "quote": "The glass pendant is a sculpture when it\u2019s off and pure warmth when it\u2019s on. Exactly what our dining room needed.",
+            "author": "Hannah, London"
+          }
+        },
+        "q2": {
+          "type": "quote",
+          "settings": {
+            "rating": 5,
+            "quote": "Beautifully made and arrived perfectly packed. It feels like a real design piece, not a copy.",
+            "author": "Marco, Manchester"
+          }
+        },
+        "q3": {
+          "type": "quote",
+          "settings": {
+            "rating": 5,
+            "quote": "Clean lines, great quality and genuinely helpful service. Our second order is already on its way.",
+            "author": "Sofie, Bristol"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {
+        "heading": "Lived with, loved",
+        "color_scheme": "default",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "heading": "Join our list",
-        "text": "<p>New arrivals, studio stories, and early access to sales.</p>",
-        "color_scheme": "default",
+        "heading": "Join the studio",
+        "text": "<p>New arrivals, design stories and early access to sales \u2014 sent sparingly, like good design.</p>",
+        "color_scheme": "inverse",
         "padding_top": 80,
         "padding_bottom": 80
       }
@@ -86,8 +272,13 @@
   },
   "order": [
     "hero",
+    "values",
+    "categories",
     "featured",
     "story",
+    "heritage",
+    "featured_2",
+    "testimonials",
     "newsletter"
   ]
 }

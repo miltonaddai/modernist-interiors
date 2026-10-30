@@ -3,15 +3,15 @@
     "page": "Page {{ page }}",
     "pagination": "Pagination",
     "search": "Search",
-    "search_placeholder": "Search products",
+    "search_placeholder": "Search lamps, furniture, objects",
     "search_results": {
-      "one": "{{ count }} result for \u201c{{ terms }}\u201d",
-      "other": "{{ count }} results for \u201c{{ terms }}\u201d"
+      "one": "{{ count }} result for “{{ terms }}”",
+      "other": "{{ count }} results for “{{ terms }}”"
     },
     "no_results": "No results",
     "view_all": "View all",
-    "404_title": "Page not found",
-    "404_text": "The page you were looking for doesn\u2019t exist."
+    "404_title": "This page has been reduced to nothing",
+    "404_text": "Less is more — but not this much. Let’s get you back to the collection."
   },
   "accessibility": {
     "skip_to_content": "Skip to content",
@@ -40,12 +40,12 @@
       "other": "{{ count }} products"
     },
     "sort_by": "Sort by",
-    "empty": "No products found."
+    "empty": "Nothing here yet. New pieces are on their way."
   },
   "cart": {
     "title": "Cart",
-    "empty": "Your cart is empty.",
-    "continue": "Continue shopping",
+    "empty": "Your cart is empty — a blank canvas.",
+    "continue": "Explore the collection",
     "subtotal": "Subtotal",
     "taxes": "Taxes and shipping calculated at checkout.",
     "checkout": "Check out",
@@ -62,7 +62,7 @@
   "newsletter": {
     "label": "Email address",
     "button": "Subscribe",
-    "success": "Thanks for subscribing."
+    "success": "Welcome to the studio. Watch your inbox."
   },
   "password": {
     "notify": "Notify me",
@@ -84,7 +84,7 @@
     "balance": "Remaining balance: {{ balance }}",
     "expired": "This gift card has expired.",
     "apple_wallet": "Add to Apple Wallet",
-    "shop": "Start shopping",
+    "shop": "Explore the collection",
     "print": "Print"
   },
   "customer": {
@@ -99,7 +99,7 @@
     "create": "Create",
     "guest": "Continue as guest",
     "reset_title": "Reset your password",
-    "reset_sent": "We\u2019ve sent you an email with a link to reset your password.",
+    "reset_sent": "We’ve sent you an email with a link to reset your password.",
     "reset": "Reset password",
     "submit": "Submit",
     "cancel": "Cancel",
@@ -110,7 +110,7 @@
     "order": "Order",
     "date": "Date",
     "status": "Status",
-    "no_orders": "You haven\u2019t placed any orders yet.",
+    "no_orders": "No orders yet. Your first design classic is waiting.",
     "addresses": "Addresses",
     "manage_addresses": "Manage addresses",
     "back": "Back to account",

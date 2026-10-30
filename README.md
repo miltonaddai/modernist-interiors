@@ -1,20 +1,26 @@
 # Modernist — Shopify theme for Modernist Interiors
 
-An original Online Store 2.0 theme inspired by the clean, editorial look of Shopify's *Hyper* theme
-(Inter typography, black/white palette with a soft sage accent `#EEF1EA`, pill buttons, 14px image radius,
-generous whitespace, hover image swap and scroll-reveal animations). All Liquid, CSS and JS are written from scratch.
+Modernist Interiors sells Bauhaus-inspired and modern lighting, furniture and objects — pieces where form follows function.
+This is an original Online Store 2.0 theme: the clean, editorial layout takes its cues from Shopify's *Hyper*
+(Inter typography, black/white with a soft sage `#EEF1EA`, pill buttons, large product imagery) with Bauhaus primary-colour
+accents in the value props. All Liquid, CSS and JS are written from scratch.
 
-## Homepage (lean by design)
-1. **Hero banner** – full-bleed image, eyebrow / heading / text / buttons blocks
-2. **Featured collection** – product grid (2–4 columns, hover second image)
-3. **Image with text** – brand story on sage background
-4. **Newsletter** – Shopify customer form
+## Homepage
+1. **Hero banner** – “Objects with purpose. Lines with intent.”
+2. **Value props** – free shipping / design classics / 30-day returns, with Bauhaus circle-square-triangle icons
+3. **Collection list** – shop-by-category tiles (pick collections in the editor)
+4. **Featured collection** – bestsellers, large cards (3 columns desktop, 2 tablet, 1–2 mobile)
+5. **Image with text** – brand ethos on sage
+6. **Editorial** – Bauhaus heritage with numbered principles
+7. **Featured collection** – new arrivals
+8. **Testimonials**
+9. **Newsletter** – “Join the studio”
 Header (announcement bar + header) and footer are **section groups** (`sections/header-group.json`, `sections/footer-group.json`).
 
 ## Structure
 ```
 layout/      theme.liquid, password.liquid
-sections/    hero, featured-collection, image-with-text, newsletter, header, announcement-bar, footer,
+sections/    hero, value-props, collection-list, featured-collection, image-with-text, editorial, testimonials, newsletter, header, announcement-bar, footer,
              main-* (product, collection, list-collections, cart, search, page, blog, article, 404, password,
              login, register, account, order, addresses, activate-account, reset-password),
              related-products, predictive-search, header-group.json, footer-group.json
@@ -48,4 +54,4 @@ shopify theme push  --store your-store.myshopify.com --unpublished
 ```
 
 ## After install
-Set the header menu (`main-menu`) and footer menu (`footer`), pick the homepage collection, and upload the hero / brand story images.
+Set the header menu (`main-menu`) and footer menu (`footer`), assign collections to the four category tiles and both featured-collection sections (they default to *All*), and upload the hero / ethos images. Replace the sample testimonials with real reviews.

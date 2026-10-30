@@ -2,16 +2,19 @@
 <section class="section scheme-{{ section.settings.color_scheme }}" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
   <div class="page-width">
     <div class="section-head reveal">
+      <div>
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
       {%- if section.settings.heading != blank -%}<h2 class="h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      </div>
       {%- if section.settings.show_view_all and col != blank -%}<a href="{{ col.url }}" class="link-arrow">{{ 'general.view_all' | t }} {% render 'icon', icon: 'arrow' %}</a>{%- endif -%}
     </div>
-    <ul class="grid grid--{{ section.settings.columns }}" role="list">
+    <ul class="grid grid--products" role="list" style="--cols-desktop: {{ section.settings.columns }}; --cols-mobile: {{ section.settings.columns_mobile }};">
       {%- if col != blank and col.products_count > 0 -%}
         {%- for product in col.products limit: section.settings.limit -%}
           <li class="reveal">{% render 'product-card', product: product, show_vendor: section.settings.show_vendor, show_secondary_image: section.settings.show_secondary_image %}</li>
         {%- endfor -%}
       {%- else -%}
-        {%- for i in (1..4) -%}<li>{% render 'product-card', product: blank %}</li>{%- endfor -%}
+        {%- for i in (1..section.settings.columns) -%}<li>{% render 'product-card', product: blank %}</li>{%- endfor -%}
       {%- endif -%}
     </ul>
   </div>
@@ -25,9 +28,15 @@
   "settings": [
     {
       "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Shop the collection"
+      "default": "Design classics"
     },
     {
       "type": "collection",
@@ -41,7 +50,7 @@
       "min": 2,
       "max": 12,
       "step": 1,
-      "default": 8
+      "default": 6
     },
     {
       "type": "range",
@@ -50,7 +59,23 @@
       "min": 2,
       "max": 4,
       "step": 1,
-      "default": 4
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
     },
     {
       "type": "checkbox",

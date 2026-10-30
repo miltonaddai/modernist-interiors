@@ -2,7 +2,7 @@
   {%- if recommendations.performed and recommendations.products_count > 0 -%}
   <div class="page-width">
     <h2 class="h3 section-head">{{ section.settings.heading }}</h2>
-    <ul class="grid grid--4" role="list">
+    <ul class="grid grid--products" role="list" style="--cols-desktop: 3; --cols-mobile: 2;">
       {%- for product in recommendations.products -%}<li>{% render 'product-card', product: product, show_secondary_image: true %}</li>{%- endfor -%}
     </ul>
   </div>
@@ -19,7 +19,7 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "You may also like"
+      "default": "Pairs well with"
     },
     {
       "type": "range",
@@ -28,7 +28,7 @@
       "min": 2,
       "max": 8,
       "step": 1,
-      "default": 4
+      "default": 3
     },
     {
       "type": "range",
