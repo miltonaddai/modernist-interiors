@@ -407,3 +407,29 @@ html:root{--radius-button:0px}
 .button,.icon-btn,.qty,.qty-input,.qty__btn,.qty__step,input,select,textarea,.newsletter__row input,.menu-drawer__search input,.sort select,
 .option__values label,.badge,.pagination__link,.sticky-atc .button,.drawer .button,.header__dropdown,.product__thumb,
 .shopify-payment-button__button,.shopify-payment-button__button--unbranded,.shopify-payment-button__more-options{border-radius:0!important}
+
+/* ===== Footer v2 ===== */
+@media (min-width:990px){.footer__grid{grid-template-columns:1.4fr 1fr 1fr 1fr 1.6fr;gap:2.5rem}}
+.footer__brand{font-family:var(--font-heading-family);font-weight:var(--font-heading-weight);text-transform:none;letter-spacing:-.01em;font-size:1rem}
+.footer__email{font-weight:600;text-decoration:underline;text-underline-offset:3px;font-size:.8125rem;overflow-wrap:anywhere}
+.footer__contact{display:grid;gap:.5rem}
+.footer__nl-text{margin:0 0 .75rem;opacity:.8}
+.footer__nl-row{display:flex;gap:0}
+.footer__nl-row input{flex:1;min-width:0;min-height:48px;border:1px solid var(--color-fg);border-right:0;background:var(--color-bg);border-radius:0}
+.footer__nl-row .button{min-height:48px;padding:0 1.25rem;flex:0 0 auto}
+.footer__bottom{gap:.75rem 1.5rem}
+.footer__policies,.footer__social{display:flex;flex-wrap:wrap;gap:.25rem 1rem}
+.footer__policies li,.footer__social li{margin:0}
+.footer__copy{margin:0}
+.payment-icons{display:flex;flex-wrap:wrap;gap:.4rem}
+.payment-icon{width:38px;height:24px}
+@media (max-width:749px){
+  .footer__details summary{min-height:52px;border-radius:0}
+  .footer__details ul a{display:flex;align-items:center;min-height:44px;padding:0}
+  .footer__details ul li{margin:0}
+  .footer__contact{padding-bottom:1rem}
+  .footer__email{display:flex;align-items:center;min-height:44px}
+  .footer__block--newsletter{padding:1.5rem 0;border-bottom:0}
+  .footer__block--text{padding:1.5rem 0 1rem}
+  .footer__policies a,.footer__social a{display:inline-flex;align-items:center;min-height:44px}
+}

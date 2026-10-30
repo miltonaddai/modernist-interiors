@@ -22,24 +22,42 @@
           }
         },
         "shop": {
-          "type": "menu",
+          "type": "shop_links",
           "settings": {
             "heading": "Shop",
-            "menu": "main-menu"
+            "menu": ""
           }
         },
         "info": {
-          "type": "menu",
+          "type": "company",
           "settings": {
             "heading": "Studio",
-            "menu": "footer"
+            "menu": "",
+            "contact_url": ""
+          }
+        },
+        "contact": {
+          "type": "contact",
+          "settings": {
+            "heading": "Contact",
+            "text": "<p>Questions about a piece or an order? We reply within one business day.</p>",
+            "email": ""
+          }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Join the studio",
+            "text": "New arrivals and design stories, sent sparingly."
           }
         }
       },
       "block_order": [
         "about",
         "shop",
-        "info"
+        "info",
+        "contact",
+        "newsletter"
       ],
       "settings": {
         "show_payment": true,

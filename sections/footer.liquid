@@ -1,22 +1,96 @@
+{%- liquid
+  assign shop_fallback = 'Lighting|/collections/lighting,Furniture|/collections/furniture,Home Décor|/collections/home-decor,Rugs & Textiles|/collections/rugs-textiles,All products|/collections/all,New arrivals|/collections/all?sort_by=created-descending' | split: ','
+-%}
 <footer class="footer scheme-{{ section.settings.color_scheme }}">
   <div class="page-width footer__grid">
     {%- for block in section.blocks -%}
-      <div class="footer__block" {{ block.shopify_attributes }}>
+      <div class="footer__block footer__block--{{ block.type }}" {{ block.shopify_attributes }}>
         {%- case block.type -%}
+          {%- when 'text' -%}
+            <h2 class="footer__heading footer__brand">{{ block.settings.heading }}</h2>
+            <div class="rte small">{{ block.settings.text }}</div>
           {%- when 'menu' -%}
             <details class="footer__details" data-footer-details>
               <summary class="footer__heading">{{ block.settings.heading }}{% render 'icon', icon: 'chevron', size: 14 %}</summary>
               <ul role="list">{%- for link in block.settings.menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
             </details>
-          {%- when 'text' -%}
+          {%- when 'shop_links' -%}
+            <details class="footer__details" data-footer-details>
+              <summary class="footer__heading">{{ block.settings.heading }}{% render 'icon', icon: 'chevron', size: 14 %}</summary>
+              <ul role="list">
+                {%- if block.settings.menu != blank and block.settings.menu.links.size > 0 -%}
+                  {%- for link in block.settings.menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
+                {%- else -%}
+                  {%- for item in shop_fallback -%}{%- assign parts = item | split: '|' -%}<li><a href="{{ parts[1] }}">{{ parts[0] }}</a></li>{%- endfor -%}
+                {%- endif -%}
+              </ul>
+            </details>
+          {%- when 'company' -%}
+            <details class="footer__details" data-footer-details>
+              <summary class="footer__heading">{{ block.settings.heading }}{% render 'icon', icon: 'chevron', size: 14 %}</summary>
+              <ul role="list">
+                {%- if block.settings.menu != blank and block.settings.menu.links.size > 0 -%}
+                  {%- for link in block.settings.menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
+                {%- else -%}
+                  <li><a href="/pages/about">About</a></li>
+                  <li><a href="{{ block.settings.contact_url | default: '/pages/contact' }}">Contact</a></li>
+                  <li><a href="{{ routes.search_url }}">Search</a></li>
+                  {%- if shop.customer_accounts_enabled -%}<li><a href="{{ routes.account_url }}">Track order</a></li>{%- endif -%}
+                {%- endif -%}
+              </ul>
+            </details>
+          {%- when 'contact' -%}
+            {%- assign email = block.settings.email | default: shop.email -%}
+            <details class="footer__details" data-footer-details>
+              <summary class="footer__heading">{{ block.settings.heading }}{% render 'icon', icon: 'chevron', size: 14 %}</summary>
+              <div class="footer__contact">
+                {%- if block.settings.text != blank -%}<div class="rte small">{{ block.settings.text }}</div>{%- endif -%}
+                {%- if email != blank -%}<a class="footer__email" href="mailto:{{ email }}">{{ email }}</a>{%- endif -%}
+              </div>
+            </details>
+          {%- when 'newsletter' -%}
             <h2 class="footer__heading">{{ block.settings.heading }}</h2>
-            <div class="rte">{{ block.settings.text }}</div>
+            {%- if block.settings.text != blank -%}<p class="small footer__nl-text">{{ block.settings.text }}</p>{%- endif -%}
+            {%- form 'customer', id: 'FooterNewsletter', class: 'footer__nl' -%}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              {%- if form.posted_successfully? -%}<p class="form-success small">Thanks for joining the studio.</p>{%- endif -%}
+              {%- if form.errors -%}<p class="form-error small">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>{%- endif -%}
+              <div class="footer__nl-row">
+                <label for="FooterNL-{{ block.id }}" class="visually-hidden">Email</label>
+                <input id="FooterNL-{{ block.id }}" type="email" name="contact[email]" placeholder="Email address" autocomplete="email" required>
+                <button type="submit" class="button">Join</button>
+              </div>
+            {%- endform -%}
         {%- endcase -%}
       </div>
     {%- endfor -%}
   </div>
+
   <div class="page-width footer__bottom">
-    <p class="small">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}.</p>
+    <p class="small footer__copy">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}</p>
+    {%- if shop.policies.size > 0 -%}
+      <ul class="footer__policies small" role="list">
+        {%- for policy in shop.policies -%}<li><a href="{{ policy.url }}">{{ policy.title }}</a></li>{%- endfor -%}
+      </ul>
+    {%- endif -%}
+    {%- liquid
+      assign socials = 'instagram,pinterest,tiktok,facebook,youtube,x' | split: ','
+      assign has_social = false
+      for s in socials
+        assign key = 'social_' | append: s
+        if section.settings[key] != blank
+          assign has_social = true
+        endif
+      endfor
+    -%}
+    {%- if has_social -%}
+      <ul class="footer__social small" role="list">
+        {%- for s in socials -%}
+          {%- assign key = 'social_' | append: s -%}
+          {%- if section.settings[key] != blank -%}<li><a href="{{ section.settings[key] }}" target="_blank" rel="noopener">{% if s == 'x' %}X{% elsif s == 'tiktok' %}TikTok{% elsif s == 'youtube' %}YouTube{% else %}{{ s | capitalize }}{% endif %}</a></li>{%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
     {%- if section.settings.show_payment -%}
       <ul class="payment-icons" role="list">{%- for type in shop.enabled_payment_types -%}<li>{{ type | payment_type_svg_tag: class: 'payment-icon' }}</li>{%- endfor -%}</ul>
     {%- endif -%}
@@ -28,6 +102,10 @@
   "name": "Footer",
   "class": "section-footer",
   "settings": [
+    {
+      "type": "header",
+      "content": "Bottom row"
+    },
     {
       "type": "checkbox",
       "id": "show_payment",
@@ -53,6 +131,36 @@
           "label": "Inverse"
         }
       ]
+    },
+    {
+      "type": "url",
+      "id": "social_instagram",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "social_pinterest",
+      "label": "Pinterest URL"
+    },
+    {
+      "type": "url",
+      "id": "social_tiktok",
+      "label": "Tiktok URL"
+    },
+    {
+      "type": "url",
+      "id": "social_facebook",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "social_youtube",
+      "label": "Youtube URL"
+    },
+    {
+      "type": "url",
+      "id": "social_x",
+      "label": "X (Twitter) URL"
     }
   ],
   "blocks": [
@@ -91,9 +199,97 @@
           "default": "<p>Bauhaus-inspired lighting, furniture and objects for modern homes. Designed with purpose, made to last.</p>"
         }
       ]
+    },
+    {
+      "type": "shop_links",
+      "name": "Shop links",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Shop"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu (optional)",
+          "info": "Leave empty to show Lighting, Furniture, Home Décor, Rugs & Textiles, All products and New arrivals."
+        }
+      ]
+    },
+    {
+      "type": "company",
+      "name": "Company & help",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Studio"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu (optional)",
+          "info": "Leave empty to show About, Contact, Search and Track order."
+        },
+        {
+          "type": "url",
+          "id": "contact_url",
+          "label": "Contact page link",
+          "info": "Defaults to /pages/contact"
+        }
+      ]
+    },
+    {
+      "type": "contact",
+      "name": "Contact",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Contact"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Questions about a piece or an order? We reply within one business day.</p>"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "Email",
+          "info": "Defaults to your store email."
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Join the studio"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "New arrivals and design stories, sent sparingly."
+        }
+      ]
     }
   ],
-  "max_blocks": 4,
+  "max_blocks": 6,
   "enabled_on": {
     "groups": [
       "footer"
