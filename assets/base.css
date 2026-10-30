@@ -402,11 +402,16 @@ h1,h2,h3,.h1,.h2,.h-xl,.h-lg{overflow-wrap:break-word;hyphens:manual}
   .collection-card__title,.grid--tiles .collection-card__title{height:40px;padding:0 .6rem;gap:.35rem;font-size:.5625rem;letter-spacing:.04em}
 }
 
-/* ===== Sharp corners on all buttons & controls (overrides editor radius) ===== */
-html:root{--radius-button:0px}
-.button,.icon-btn,.qty,.qty-input,.qty__btn,.qty__step,input,select,textarea,.newsletter__row input,.menu-drawer__search input,.sort select,
-.option__values label,.badge,.pagination__link,.sticky-atc .button,.drawer .button,.header__dropdown,.product__thumb,
-.shopify-payment-button__button,.shopify-payment-button__button--unbranded,.shopify-payment-button__more-options{border-radius:0!important}
+/* ===== Buttons & controls share the image-card radius (Image corner radius setting) ===== */
+html:root{--radius-button:var(--radius-card)}
+.button,.qty,.qty-input,.qty__btn,.qty__step,input,select,textarea,.newsletter__row input,.menu-drawer__search input,.sort select,
+.option__values label,.badge,.sticky-atc .button,.drawer .button,.header__dropdown,.product__thumb,
+.shopify-payment-button__button,.shopify-payment-button__button--unbranded,.shopify-payment-button__more-options{border-radius:var(--radius-card)!important}
+input[type=checkbox]{border-radius:3px!important}input[type=radio]{border-radius:50%!important}
+.icon-btn,.pagination__link{border-radius:50%!important}
+.qty .qty__btn,.qty .qty-input,.qty .qty__step{border-radius:0!important}
+.footer__nl-row input{border-radius:var(--radius-card) 0 0 var(--radius-card)!important}
+.footer__nl-row .button,.footer__nl-row button{border-radius:0 var(--radius-card) var(--radius-card) 0!important}
 
 /* ===== Footer v2 ===== */
 @media (min-width:990px){.footer__grid{grid-template-columns:1.4fr 1fr 1fr 1fr 1.6fr;gap:2.5rem}}
