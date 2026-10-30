@@ -381,3 +381,14 @@ h1,h2,h3,.h1,.h2,.h-xl,.h-lg{overflow-wrap:break-word;hyphens:manual}
 .values__icon{display:block;margin:0 auto}
 .values__svg--wide{width:42px}
 @media (max-width:749px){.values__svg{width:24px;height:24px}.values__svg--wide{width:36px}}
+
+/* ===== Mobile scrollers + category tiles hardening ===== */
+@media (max-width:749px){
+  .scroller{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;touch-action:pan-x pan-y;scroll-snap-type:x mandatory;scroll-padding-inline:1rem;align-items:stretch}
+  .scroller>li{scroll-snap-align:start}
+  .grid--tiles.scroller>li{flex:0 0 78vw}
+  .grid--tiles:not(.scroller){grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;overflow:visible}
+  .grid--tiles .collection-card{aspect-ratio:4/5}
+  .grid--tiles .collection-card__title{left:.5rem;bottom:.5rem;max-width:calc(100% - 1rem);height:auto;min-height:2rem;padding:.4rem .75rem;font-size:.75rem;line-height:1.2;white-space:normal}
+  .grid--tiles .collection-card__title .icon{flex:0 0 auto}
+}
