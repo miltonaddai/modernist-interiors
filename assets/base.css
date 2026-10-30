@@ -392,3 +392,12 @@ h1,h2,h3,.h1,.h2,.h-xl,.h-lg{overflow-wrap:break-word;hyphens:manual}
   .grid--tiles .collection-card__title{left:.5rem;bottom:.5rem;max-width:calc(100% - 1rem);height:auto;min-height:2rem;padding:.4rem .75rem;font-size:.75rem;line-height:1.2;white-space:normal}
   .grid--tiles .collection-card__title .icon{flex:0 0 auto}
 }
+
+/* ===== Category tiles: uniform Bauhaus label bar ===== */
+.collection-card__title,.grid--tiles .collection-card__title{left:0;right:0;bottom:0;width:auto;max-width:none;height:48px;min-height:0;padding:0 1rem;border-radius:0;background:var(--color-fg);color:var(--color-bg);display:flex;justify-content:space-between;align-items:center;gap:.5rem;font-family:var(--font-body-family);font-weight:600;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;line-height:1;white-space:nowrap}
+.collection-card__label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.collection-card__title .icon{flex:0 0 auto;transition:transform .25s}
+.collection-card:hover .collection-card__title .icon{transform:translateX(3px)}
+@media (max-width:749px){
+  .collection-card__title,.grid--tiles .collection-card__title{height:40px;padding:0 .6rem;gap:.35rem;font-size:.5625rem;letter-spacing:.04em}
+}
