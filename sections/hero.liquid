@@ -1,7 +1,11 @@
-<section class="hero scheme-{{ section.settings.color_scheme }} hero--{{ section.settings.height }} hero--{{ section.settings.text_position }}">
+{%- capture focal_style -%}object-position: {{ section.settings.focal }}{%- endcapture -%}
+<section class="hero{% if section.settings.image_mobile != blank %} hero--has-mobile{% endif %} scheme-{{ section.settings.color_scheme }} hero--{{ section.settings.height }} hero--{{ section.settings.text_position }}">
   <div class="hero__media">
     {%- if section.settings.image != blank -%}
-      {{ section.settings.image | image_url: width: 3000 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750, 1100, 1500, 2000, 3000', alt: section.settings.image.alt }}
+      {%- if section.settings.image_mobile != blank -%}
+        {{ section.settings.image_mobile | image_url: width: 1500 | image_tag: loading: 'eager', fetchpriority: 'high', class: 'hero__img hero__img--mobile', sizes: '100vw', widths: '400, 600, 800, 1100, 1500', alt: section.settings.image_mobile.alt }}
+      {%- endif -%}
+      {{ section.settings.image | image_url: width: 3000 | image_tag: loading: 'eager', fetchpriority: 'high', class: 'hero__img', sizes: '100vw', widths: '400, 600, 800, 1100, 1500, 2000, 3000', alt: section.settings.image.alt, style: focal_style }}
     {%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder' }}{%- endif -%}
     <div class="hero__overlay" style="opacity: {{ section.settings.overlay | divided_by: 100.0 }}"></div>
   </div>
@@ -31,6 +35,40 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image",
+      "info": "Optional portrait crop shown on phones"
+    },
+    {
+      "type": "select",
+      "id": "focal",
+      "label": "Image focal point (mobile crop)",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
     },
     {
       "type": "select",

@@ -12,12 +12,7 @@
 
   document.addEventListener('click', (e) => {
     const menuBtn = e.target.closest('[data-menu-toggle]');
-    if (menuBtn) {
-      const nav = document.getElementById(menuBtn.getAttribute('aria-controls'));
-      const open = menuBtn.getAttribute('aria-expanded') === 'true';
-      menuBtn.setAttribute('aria-expanded', String(!open));
-      nav.hidden = open;
-    }
+    if (menuBtn) { const d = document.getElementById(menuBtn.getAttribute('aria-controls')); if (d && d.open) d.open(menuBtn); }
     const searchBtn = e.target.closest('[data-search-toggle]');
     if (searchBtn) {
       const bar = $('[data-search-bar]');
@@ -33,6 +28,59 @@
     if (msg && !window.confirm(msg)) e.preventDefault();
   });
   $$('[data-autosubmit]').forEach((el) => el.addEventListener('change', () => el.form.submit()));
+
+  /* Menu drawer */
+  class MenuDrawer extends HTMLElement {
+    connectedCallback() {
+      this.panel = this.querySelector('.menu-drawer__panel');
+      this.addEventListener('click', (e) => { if (e.target.closest('[data-menu-close]')) this.close(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && this.classList.contains('is-open')) this.close(); });
+    }
+    open(trigger) {
+      this.trigger = trigger;
+      this.classList.add('is-open'); this.setAttribute('aria-hidden', 'false');
+      if (trigger) trigger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => this.panel.focus(), 50);
+    }
+    close() {
+      this.classList.remove('is-open'); this.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (this.trigger) { this.trigger.setAttribute('aria-expanded', 'false'); this.trigger.focus(); }
+    }
+  }
+  if (!customElements.get('menu-drawer')) customElements.define('menu-drawer', MenuDrawer);
+
+  /* Compact sticky header on scroll */
+  const header = $('[data-header]');
+  if (header) {
+    const onScroll = () => header.classList.toggle('header__compact', window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  }
+
+  /* Footer accordions: open on desktop, collapsed on mobile */
+  const mq = window.matchMedia('(min-width: 750px)');
+  const syncFooter = () => $$('[data-footer-details]').forEach((d) => { d.open = mq.matches; });
+  syncFooter(); mq.addEventListener('change', syncFooter);
+
+  /* Product gallery dots */
+  $$('[data-gallery]').forEach((g) => {
+    const dots = $$('.product__dot', g.parentElement);
+    if (!dots.length) return;
+    g.addEventListener('scroll', () => {
+      const i = Math.round(g.scrollLeft / g.clientWidth);
+      dots.forEach((d, n) => d.classList.toggle('is-active', n === i));
+    }, { passive: true });
+  });
+
+  /* Sticky add-to-cart (mobile) */
+  const sticky = $('[data-sticky-atc]');
+  const mainAdd = $('[data-product-form] [data-add]');
+  if (sticky && mainAdd && 'IntersectionObserver' in window) {
+    sticky.hidden = false;
+    new IntersectionObserver(([en]) => sticky.classList.toggle('is-visible', !en.isIntersecting && en.boundingClientRect.top < 0)).observe(mainAdd);
+    $('[data-sticky-add]', sticky).addEventListener('click', () => mainAdd.click());
+  }
 
   /* Predictive search (Section Rendering API) */
   const pInput = $('[data-predictive]');

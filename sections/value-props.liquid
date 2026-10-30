@@ -1,6 +1,6 @@
 <section class="section scheme-{{ section.settings.color_scheme }}" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
   <div class="page-width">
-    <ul class="values" role="list">
+    <ul class="values scroller scroller--mobile" role="list">
       {%- for block in section.blocks -%}
         <li class="values__item reveal" {{ block.shopify_attributes }}>
           <span class="values__icon values__icon--{{ block.settings.shape }}" aria-hidden="true"></span>

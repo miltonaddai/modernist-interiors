@@ -1,7 +1,7 @@
 <section class="section scheme-{{ section.settings.color_scheme }}" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
   <div class="page-width">
     {%- if section.settings.heading != blank -%}<h2 class="h2 center reveal">{{ section.settings.heading }}</h2>{%- endif -%}
-    <ul class="quotes" role="list">
+    <ul class="quotes scroller scroller--mobile" role="list">
       {%- for block in section.blocks -%}
         <li class="reveal" {{ block.shopify_attributes }}>
           <figure class="quote">

@@ -1,17 +1,30 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 <section class="section product" style="--pt: 32px; --pb: 64px;" data-product-section>
   <div class="page-width product__grid">
-    <div class="product__media">
+    <div class="product__gallery">
+    <div class="product__media" data-gallery>
       {%- for media in product.media -%}
         <div class="product__media-item">
+          {%- liquid
+            assign lazy_val = 'lazy'
+            if forloop.first
+              assign lazy_val = 'eager'
+            endif
+          -%}
           {%- case media.media_type -%}
-            {%- when 'image' -%}{{ media | image_url: width: 1800 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 60vw, 100vw', widths: '600, 900, 1200, 1800', alt: media.alt }}
+            {%- when 'image' -%}{{ media | image_url: width: 1800 | image_tag: loading: lazy_val, sizes: '(min-width: 990px) 55vw, 100vw', widths: '400, 600, 800, 1100, 1500, 1800', alt: media.alt }}
             {%- when 'video', 'external_video' -%}{{ media | media_tag: image_size: '1200x' }}
             {%- when 'model' -%}{{ media | model_viewer_tag }}
           {%- endcase -%}
         </div>
       {%- else -%}<div class="product__media-item">{{ 'product-1' | placeholder_svg_tag: 'placeholder' }}</div>
       {%- endfor -%}
+    </div>
+    {%- if product.media.size > 1 -%}
+      <div class="product__dots" data-dots aria-hidden="true">
+        {%- for media in product.media -%}<span class="product__dot{% if forloop.first %} is-active{% endif %}"></span>{%- endfor -%}
+      </div>
+    {%- endif -%}
     </div>
     <div class="product__info">
       <div class="product__sticky">
@@ -62,6 +75,12 @@
     </div>
   </div>
 </section>
+{%- if current_variant.available -%}
+<div class="sticky-atc" data-sticky-atc hidden>
+  <div class="sticky-atc__info"><span class="sticky-atc__title">{{ product.title }}</span><span class="small" data-sticky-price>{{ current_variant.price | money }}</span></div>
+  <button type="button" class="button" data-sticky-add>{{ 'products.product.add_to_cart' | t }}</button>
+</div>
+{%- endif -%}
 <script type="application/ld+json">{{ product | structured_data }}</script>
 
 {% schema %}

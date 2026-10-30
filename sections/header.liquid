@@ -36,16 +36,43 @@
     </form>
     <div class="page-width predictive" data-predictive-results aria-live="polite"></div>
   </div>
-  <nav id="MobileNav" class="mobile-nav" hidden aria-label="{{ 'accessibility.mobile_nav' | t }}">
-    <ul role="list">
-      {%- for link in menu.links -%}
-        <li><a href="{{ link.url }}">{{ link.title }}</a>
-          {%- if link.links.size > 0 -%}<ul role="list">{%- for child in link.links -%}<li><a href="{{ child.url }}">{{ child.title }}</a></li>{%- endfor -%}</ul>{%- endif -%}
-        </li>
-      {%- endfor -%}
-      {%- if shop.customer_accounts_enabled -%}<li><a href="{{ routes.account_url }}">{{ 'customer.account' | t }}</a></li>{%- endif -%}
-    </ul>
-  </nav>
+  <menu-drawer id="MobileNav" class="menu-drawer" aria-hidden="true">
+    <div class="drawer__overlay" data-menu-close></div>
+    <div class="menu-drawer__panel" role="dialog" aria-modal="true" aria-label="{{ 'accessibility.mobile_nav' | t }}" tabindex="-1">
+      <div class="drawer__header">
+        <span class="header__wordmark">{{ shop.name }}</span>
+        <button type="button" class="icon-btn" data-menu-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+      </div>
+      <form action="{{ routes.search_url }}" method="get" role="search" class="menu-drawer__search">
+        <label for="DrawerSearch" class="visually-hidden">{{ 'general.search' | t }}</label>
+        <input id="DrawerSearch" type="search" name="q" placeholder="{{ 'general.search_placeholder' | t }}">
+        <input type="hidden" name="type" value="product">
+        <button type="submit" class="icon-btn" aria-label="{{ 'general.search' | t }}">{% render 'icon', icon: 'search' %}</button>
+      </form>
+      <nav aria-label="{{ 'accessibility.mobile_nav' | t }}">
+        <ul class="menu-drawer__list" role="list">
+          {%- for link in menu.links -%}
+            <li>
+              {%- if link.links.size > 0 -%}
+                <details class="menu-drawer__group">
+                  <summary class="menu-drawer__link">{{ link.title }}{% render 'icon', icon: 'chevron' %}</summary>
+                  <ul role="list">
+                    <li><a href="{{ link.url }}" class="menu-drawer__sublink">{{ 'general.view_all' | t }}</a></li>
+                    {%- for child in link.links -%}<li><a href="{{ child.url }}" class="menu-drawer__sublink">{{ child.title }}</a></li>{%- endfor -%}
+                  </ul>
+                </details>
+              {%- else -%}
+                <a href="{{ link.url }}" class="menu-drawer__link"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="menu-drawer__account">{% render 'icon', icon: 'account' %}<span>{{ 'customer.account' | t }}</span></a>
+      {%- endif -%}
+    </div>
+  </menu-drawer>
 </header>
 
 {% schema %}

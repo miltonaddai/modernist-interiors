@@ -4,8 +4,10 @@
       <div class="footer__block" {{ block.shopify_attributes }}>
         {%- case block.type -%}
           {%- when 'menu' -%}
-            <h2 class="footer__heading">{{ block.settings.heading }}</h2>
-            <ul role="list">{%- for link in block.settings.menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
+            <details class="footer__details" data-footer-details>
+              <summary class="footer__heading">{{ block.settings.heading }}{% render 'icon', icon: 'chevron', size: 14 %}</summary>
+              <ul role="list">{%- for link in block.settings.menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
+            </details>
           {%- when 'text' -%}
             <h2 class="footer__heading">{{ block.settings.heading }}</h2>
             <div class="rte">{{ block.settings.text }}</div>

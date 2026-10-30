@@ -1,11 +1,11 @@
 <section class="section" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
   <div class="page-width">
     <h1 class="h1 page-header">{{ section.settings.heading }}</h1>
-    <ul class="grid grid--3" role="list">
+    <ul class="grid grid--tiles" role="list" style="--cols-desktop: 3;">
       {%- for collection in collections -%}
         <li class="reveal"><a href="{{ collection.url }}" class="collection-card">
-          {%- if collection.featured_image -%}{{ collection.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: collection.title }}{%- else -%}{{ 'collection-1' | placeholder_svg_tag: 'placeholder' }}{%- endif -%}
-          <span class="collection-card__title">{{ collection.title }} {% render 'icon', icon: 'arrow' %}</span>
+          {%- if collection.featured_image -%}{{ collection.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', class: 'collection-card__img', sizes: '(min-width: 990px) 33vw, 50vw', widths: '300, 450, 600, 900', alt: collection.title }}{%- else -%}{{ 'collection-1' | placeholder_svg_tag: 'placeholder collection-card__img' }}{%- endif -%}
+          <span class="collection-card__title"><span class="collection-card__label">{{ collection.title }}</span>{% render 'icon', icon: 'arrow', size: 14 %}</span>
         </a></li>
       {%- endfor -%}
     </ul>

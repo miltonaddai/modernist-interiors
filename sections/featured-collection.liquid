@@ -6,7 +6,7 @@
       {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
       {%- if section.settings.heading != blank -%}<h2 class="h2">{{ section.settings.heading }}</h2>{%- endif -%}
       </div>
-      {%- if section.settings.show_view_all and col != blank -%}<a href="{{ col.url }}" class="link-arrow">{{ 'general.view_all' | t }} {% render 'icon', icon: 'arrow' %}</a>{%- endif -%}
+      {%- if section.settings.show_view_all and col != blank -%}<a href="{{ col.url }}" class="link-arrow">{{ 'general.view_all' | t }} {% render 'icon', icon: 'arrow', size: 14 %}</a>{%- endif -%}
     </div>
     <ul class="grid grid--products" role="list" style="--cols-desktop: {{ section.settings.columns }}; --cols-mobile: {{ section.settings.columns_mobile }};">
       {%- if col != blank and col.products_count > 0 -%}
@@ -65,7 +65,7 @@
       "type": "select",
       "id": "columns_mobile",
       "label": "Columns on mobile",
-      "default": "1",
+      "default": "2",
       "options": [
         {
           "value": "1",
