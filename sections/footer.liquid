@@ -16,7 +16,7 @@
     {%- endfor -%}
   </div>
   <div class="page-width footer__bottom">
-    <p class="small">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}. {{ powered_by_link }}</p>
+    <p class="small">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}.</p>
     {%- if section.settings.show_payment -%}
       <ul class="payment-icons" role="list">{%- for type in shop.enabled_payment_types -%}<li>{{ type | payment_type_svg_tag: class: 'payment-icon' }}</li>{%- endfor -%}</ul>
     {%- endif -%}
