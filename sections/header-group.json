@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Header group",
@@ -8,13 +17,15 @@
         "a1": {
           "type": "announcement",
           "settings": {
-            "text": "Free shipping on every order"
+            "text": "Free shipping on every order",
+            "link": ""
           }
         },
         "a2": {
           "type": "announcement",
           "settings": {
-            "text": "Bauhaus-inspired design \u00b7 30-day returns"
+            "text": "Bauhaus-inspired design · 30-day returns",
+            "link": ""
           }
         }
       },
@@ -29,10 +40,11 @@
     "header": {
       "type": "header",
       "settings": {
+        "logo": "shopify://shop_images/ea45ea957a5adcbb13584a8a339db2b548dbd667402dddea4c6b5e3cf7b656f5.png",
+        "logo_width": 240,
         "menu": "main-menu",
         "sticky": true,
-        "color_scheme": "default",
-        "logo_width": 140
+        "color_scheme": "default"
       }
     }
   },
