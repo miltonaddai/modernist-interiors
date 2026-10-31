@@ -120,7 +120,8 @@
   /* Estimated delivery range */
   $$('[data-delivery]').forEach((el) => {
     const biz = el.dataset.biz === 'true';
-    const add = (n) => { const d = new Date(); while (n > 0) { d.setDate(d.getDate() + 1); const w = d.getDay(); if (!biz || (w !== 0 && w !== 6)) n--; } return d; };
+    const cut = +(el.dataset.cut || 24);
+    const add = (n) => { const d = new Date(); if (d.getHours() >= cut) n++; while (n > 0) { d.setDate(d.getDate() + 1); const w = d.getDay(); if (!biz || (w !== 0 && w !== 6)) n--; } return d; };
     const f = { month: 'short', day: 'numeric' };
     $('[data-delivery-text]', el).innerHTML = el.dataset.label.replace('[range]', `<strong>${add(+el.dataset.min).toLocaleDateString(undefined, f)} – ${add(+el.dataset.max).toLocaleDateString(undefined, f)}</strong>`);
   });

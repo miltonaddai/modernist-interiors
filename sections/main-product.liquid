@@ -108,9 +108,27 @@
                 <span data-cutoff-text>{{ block.settings.text_fallback }}</span>
               </div>
             {%- when 'delivery_estimate' -%}
-              <div class="pdp-note pdp-delivery" data-delivery data-min="{{ block.settings.min_days | plus: block.settings.processing_days }}" data-max="{{ block.settings.max_days | plus: block.settings.processing_days }}" data-biz="{{ block.settings.business_days }}" data-label="{{ block.settings.label | escape }}" {{ block.shopify_attributes }}>
+              {%- liquid
+                assign cc = localization.country.iso_code
+                if cc == 'US' or cc == 'CA'
+                  assign dmin = block.settings.domestic_min
+                  assign dmax = block.settings.domestic_max
+                else
+                  assign dmin = block.settings.intl_min
+                  assign dmax = block.settings.intl_max
+                endif
+                assign dmin = dmin | plus: block.settings.processing_days
+                assign dmax = dmax | plus: block.settings.processing_days
+                assign cut = 24
+                for b in section.blocks
+                  if b.type == 'ship_cutoff'
+                    assign cut = b.settings.cutoff_hour
+                  endif
+                endfor
+              -%}
+              <div class="pdp-note pdp-delivery" data-delivery data-min="{{ dmin }}" data-max="{{ dmax }}" data-cut="{{ cut }}" data-biz="{{ block.settings.business_days }}" data-label="{{ block.settings.label | escape }}" {{ block.shopify_attributes }}>
                 <svg class="pdp-ico" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
-                <span data-delivery-text>{{ block.settings.label | replace: '[range]', '' }} {{ block.settings.min_days }}–{{ block.settings.max_days }} {% if block.settings.business_days %}business {% endif %}days</span>
+                <span data-delivery-text>{{ block.settings.label | replace: '[range]', '' }} {{ dmin }}–{{ dmax }} {% if block.settings.business_days %}business {% endif %}days</span>
               </div>
             {%- when 'free_shipping' -%}
               <div class="pdp-note pdp-free" {{ block.shopify_attributes }}>
@@ -198,9 +216,13 @@
       { "type": "text", "id": "text_fallback", "label": "Text if JavaScript is off", "default": "Orders are processed every business day." }
     ] },
     { "type": "delivery_estimate", "name": "Estimated delivery", "limit": 1, "settings": [
-      { "type": "range", "id": "processing_days", "label": "Processing days before shipping", "min": 0, "max": 7, "step": 1, "default": 2 },
-      { "type": "range", "id": "min_days", "label": "Shipping time: minimum days", "min": 1, "max": 30, "step": 1, "default": 5 },
-      { "type": "range", "id": "max_days", "label": "Shipping time: maximum days", "min": 1, "max": 40, "step": 1, "default": 9 },
+      { "type": "range", "id": "processing_days", "label": "Extra processing days (added on top of the ranges below)", "info": "Keep at 0 if the ranges below already include processing.", "min": 0, "max": 7, "step": 1, "default": 0 },
+      { "type": "header", "content": "US & Canada" },
+      { "type": "range", "id": "domestic_min", "label": "US & Canada: minimum days", "min": 1, "max": 30, "step": 1, "default": 3 },
+      { "type": "range", "id": "domestic_max", "label": "US & Canada: maximum days", "min": 1, "max": 40, "step": 1, "default": 7 },
+      { "type": "header", "content": "Rest of world" },
+      { "type": "range", "id": "intl_min", "label": "International: minimum days", "min": 1, "max": 30, "step": 1, "default": 5 },
+      { "type": "range", "id": "intl_max", "label": "International: maximum days", "min": 1, "max": 40, "step": 1, "default": 8 },
       { "type": "checkbox", "id": "business_days", "label": "Count business days only", "default": true },
       { "type": "text", "id": "label", "label": "Text ([range] = date range)", "default": "Estimated delivery: [range]" }
     ] },
