@@ -48,7 +48,8 @@
         "bt"
       ],
       "settings": {
-        "image": "shopify://shop_images/bac8a135d7333df15aed8b8ecad89696dc147c399e60adc7e2b9358d4b0b68d0.jpg",
+        "image": "shopify://shop_images/hero-banner-image-hq.jpg",
+        "image_mobile": "shopify://shop_images/hero-banner-image-mobile.jpg",
         "focal": "center",
         "height": "large",
         "text_position": "bottom-left",
