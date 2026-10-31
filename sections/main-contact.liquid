@@ -1,0 +1,103 @@
+<section class="mi-contact" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width mi-contact__wrap">
+    <div class="mi-contact__intro">
+      <h1 class="mi-contact__title">{{ section.settings.heading | default: page.title }}</h1>
+      {% if section.settings.intro != blank %}<div class="mi-contact__lead">{{ section.settings.intro }}</div>{% endif %}
+      {% if page.content != blank %}<div class="rte">{{ page.content }}</div>{% endif %}
+    </div>
+
+    <div class="mi-contact__form-col">
+      {% form 'contact', id: 'ContactForm', class: 'mi-contact__form' %}
+        {% if form.posted_successfully? %}
+          <div class="mi-contact__notice mi-contact__notice--ok" role="status" tabindex="-1" autofocus>{{ section.settings.success_text }}</div>
+        {% elsif form.errors %}
+          <div class="mi-contact__notice mi-contact__notice--err" role="alert">
+            <strong>Please check the form:</strong>
+            <ul>{% for field in form.errors %}<li>{% if field == 'form' %}{{ form.errors.messages[field] }}{% else %}{{ form.errors.translated_fields[field] | capitalize }} {{ form.errors.messages[field] }}{% endif %}</li>{% endfor %}</ul>
+          </div>
+        {% endif %}
+        <div class="mi-contact__row">
+          <label class="mi-field"><span>Name</span>
+            <input type="text" name="contact[name]" autocomplete="name" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"></label>
+          <label class="mi-field"><span>Email *</span>
+            <input type="email" name="contact[email]" autocomplete="email" required inputmode="email" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"></label>
+        </div>
+        <div class="mi-contact__row">
+          <label class="mi-field"><span>Phone <em>(optional)</em></span>
+            <input type="tel" name="contact[phone]" autocomplete="tel" inputmode="tel" value="{{ form.phone }}"></label>
+          <label class="mi-field"><span>Order number <em>(optional)</em></span>
+            <input type="text" name="contact[order_number]" placeholder="#1001" value="{{ form.order_number }}"></label>
+        </div>
+        <label class="mi-field"><span>Message *</span>
+          <textarea name="contact[body]" rows="6" required>{{ form.body }}</textarea></label>
+        <button type="submit" class="mi-contact__btn">{{ section.settings.button_label }}</button>
+      {% endform %}
+    </div>
+
+    <aside class="mi-contact__side">
+      {% if section.settings.side_heading != blank %}<h2 class="mi-contact__side-title">{{ section.settings.side_heading }}</h2>{% endif %}
+      <dl>
+        <div><dt>Email</dt><dd><a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></dd></div>
+        <div><dt>Reply time</dt><dd>{{ section.settings.reply_time }}</dd></div>
+      </dl>
+      {% if section.settings.side_text != blank %}<div class="mi-contact__side-text">{{ section.settings.side_text }}</div>{% endif %}
+      <ul class="mi-contact__links">
+        <li><a href="{% if shop.customer_accounts_enabled %}{{ routes.account_url }}{% else %}/pages/track-order{% endif %}">Track your order →</a></li>
+        <li><a href="{{ shop.shipping_policy.url | default: '/policies/shipping-policy' }}">Shipping policy →</a></li>
+        <li><a href="{{ shop.refund_policy.url | default: '/policies/refund-policy' }}">Returns &amp; refunds →</a></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .mi-contact{padding:calc(var(--pt)*.6) 0 calc(var(--pb)*.6);font-family:Inter,var(--font-body-family,sans-serif)}
+  .mi-contact__wrap{display:grid;gap:28px;grid-template-areas:"intro" "form" "side"}
+  .mi-contact__intro{grid-area:intro}.mi-contact__form-col{grid-area:form}.mi-contact__side{grid-area:side}
+  .mi-contact__title{font-weight:700;letter-spacing:-.02em;font-size:clamp(32px,8vw,56px);line-height:1.05;margin:0 0 12px}
+  .mi-contact__lead{font-size:17px;line-height:1.55;opacity:.85;max-width:52ch}
+  .mi-contact__form{display:grid;gap:14px}
+  .mi-contact__row{display:grid;gap:14px}
+  .mi-field{display:grid;gap:6px;font-size:14px;font-weight:600}
+  .mi-field em{font-weight:400;font-style:normal;opacity:.6}
+  .mi-contact .mi-field input,.mi-contact .mi-field textarea{width:100%;box-sizing:border-box;font:400 16px/1.4 Inter,sans-serif;color:#111 !important;background:#fff !important;-webkit-text-fill-color:#111;border:1.5px solid #cfcfcf;border-radius:var(--radius-card,14px);padding:14px 16px;min-height:52px;appearance:none}
+  .mi-contact .mi-field input::placeholder{color:#8a8a8a;-webkit-text-fill-color:#8a8a8a}
+  .mi-contact .mi-field input:focus,.mi-contact .mi-field textarea:focus{outline:none;border-color:#111;box-shadow:0 0 0 3px rgba(242,194,48,.45)}
+  .mi-contact__btn{width:100%;min-height:54px;border:0;border-radius:var(--radius-card,14px);background:#111;color:#fff;font:700 16px Inter,sans-serif;letter-spacing:.01em;cursor:pointer;transition:background .2s,color .2s}
+  .mi-contact__btn:hover{background:#F2C230;color:#111}
+  .mi-contact__notice{padding:14px 16px;border-radius:var(--radius-card,14px);font-size:15px}
+  .mi-contact__notice ul{margin:6px 0 0;padding-left:18px}
+  .mi-contact__notice--ok{background:#E7F4EC;color:#1d5c38;border:1px solid #2E7D4F}
+  .mi-contact__notice--err{background:#FDECEC;color:#8a1f1f;border:1px solid #c0392b}
+  .mi-contact__side{background:#f4f2ee;color:#111;border-radius:var(--radius-card,14px);padding:22px}
+  .mi-contact__side-title{font-weight:700;letter-spacing:-.02em;font-size:20px;margin:0 0 14px}
+  .mi-contact__side dl{margin:0;display:grid;gap:12px}
+  .mi-contact__side dt{font-size:12px;text-transform:uppercase;letter-spacing:.08em;opacity:.6}
+  .mi-contact__side dd{margin:2px 0 0;font-size:16px;font-weight:600}
+  .mi-contact__side a{color:#111}
+  .mi-contact__side-text{margin-top:14px;font-size:15px;line-height:1.5}
+  .mi-contact__links{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:4px}
+  .mi-contact__links a{display:block;padding:10px 0;font-weight:600;text-decoration:none;border-top:1px solid rgba(0,0,0,.1)}
+  @media (min-width:750px){.mi-contact{padding:var(--pt) 0 var(--pb)}.mi-contact__row{grid-template-columns:1fr 1fr}.mi-contact__btn{width:auto;padding:0 40px;justify-self:start}}
+  @media (min-width:990px){.mi-contact__wrap{grid-template-columns:1.6fr 1fr;column-gap:56px;grid-template-areas:"intro intro" "form side";align-items:start}}
+</style>
+
+{% schema %}
+{
+  "name": "Contact page",
+  "tag": "section",
+  "class": "section-main-contact",
+  "settings": [
+    {"type":"text","id":"heading","label":"Heading (blank = page title)","default":"Get in touch"},
+    {"type":"richtext","id":"intro","label":"Intro message","default":"<p>Questions about a piece, an order, or a custom request? Send us a note and we reply within one business day.</p>"},
+    {"type":"text","id":"button_label","label":"Button label","default":"Send message"},
+    {"type":"text","id":"success_text","label":"Success message","default":"Thank you — your message is on its way. We'll reply within one business day."},
+    {"type":"text","id":"side_heading","label":"Side panel heading","default":"Talk to a human"},
+    {"type":"text","id":"email","label":"Contact email","default":"hello@modernistinteriors.com"},
+    {"type":"text","id":"reply_time","label":"Reply time","default":"Within 1 business day (Mon–Fri)"},
+    {"type":"richtext","id":"side_text","label":"Side panel text","default":"<p>Include your order number for faster help with deliveries, returns, or damaged items.</p>"},
+    {"type":"range","id":"padding_top","label":"Top padding","min":0,"max":120,"step":4,"unit":"px","default":64},
+    {"type":"range","id":"padding_bottom","label":"Bottom padding","min":0,"max":120,"step":4,"unit":"px","default":80}
+  ]
+}
+{% endschema %}
