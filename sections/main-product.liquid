@@ -142,7 +142,12 @@
                 {%- for i in (1..3) -%}
                   {%- capture key %}item_{{ i }}{% endcapture -%}
                   {%- if block.settings[key] != blank -%}
-                    <li><span class="pdp-trust__shape pdp-trust__shape--{{ i }}" aria-hidden="true"></span>{{ block.settings[key] }}</li>
+                    {%- case i -%}
+                      {%- when 1 -%}{%- assign trust_icon = 'return' -%}
+                      {%- when 2 -%}{%- assign trust_icon = 'lock' -%}
+                      {%- when 3 -%}{%- assign trust_icon = 'headset' -%}
+                    {%- endcase -%}
+                    <li>{% render 'icon', icon: trust_icon, size: 20 %}<span>{{ block.settings[key] }}</span></li>
                   {%- endif -%}
                 {%- endfor -%}
               </ul>
