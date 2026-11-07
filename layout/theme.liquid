@@ -23,7 +23,8 @@
 <a class="skip-link visually-hidden-focusable" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
 {% sections 'header-group' %}
 <main id="MainContent" class="main" role="main" tabindex="-1">
-{{ content_for_layout }}
+{%- capture _main_html -%}{{ content_for_layout }}{%- endcapture -%}
+{% render 'content-without-template-quotes', html: _main_html %}
 </main>
 {% sections 'footer-group' %}
 {% render 'cart-drawer' %}

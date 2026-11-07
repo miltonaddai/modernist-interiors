@@ -1,0 +1,33 @@
+{%- comment -%}
+  Drops the homepage testimonials section from already-rendered HTML when a stale
+  template still emits unverifiable Hannah/Marco/Sofie quotes. No-op if absent.
+{%- endcomment -%}
+{%- assign html = html -%}
+{%- if html contains '__testimonials"' -%}
+  {%- assign tsplit = html | split: '__testimonials"' -%}
+  {%- assign head_bits = tsplit[0] | split: '<section' -%}
+  {%- assign head = '' -%}
+  {%- assign last_idx = head_bits.size | minus: 1 -%}
+  {%- for bit in head_bits -%}
+    {%- if forloop.index0 < last_idx -%}
+      {%- unless forloop.first -%}{%- assign head = head | append: '<section' -%}{%- endunless -%}
+      {%- assign head = head | append: bit -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign tail_src = tsplit[1] -%}
+  {%- assign skip = 1 -%}
+  {%- if tail_src contains '<section' -%}{%- assign skip = 2 -%}{%- endif -%}
+  {%- assign after = tail_src | split: '</section>' -%}
+  {%- assign rest = '' -%}
+  {%- assign started = false -%}
+  {%- for bit in after -%}
+    {%- if forloop.index0 >= skip -%}
+      {%- if started -%}{%- assign rest = rest | append: '</section>' -%}{%- endif -%}
+      {%- assign rest = rest | append: bit -%}
+      {%- assign started = true -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {{ head }}{{ rest }}
+{%- else -%}
+  {{ html }}
+{%- endif -%}

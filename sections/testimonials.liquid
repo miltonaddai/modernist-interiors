@@ -1,42 +1,4 @@
-{% comment %} Claim correction: unverifiable template quotes are not rendered. {% endcomment %}
-{%- assign quote_count = 0 -%}
-{%- for block in section.blocks -%}
-  {%- assign quote_author = block.settings.author | downcase -%}
-  {%- assign skip_quote = false -%}
-  {%- if quote_author contains 'hannah' -%}{%- assign skip_quote = true -%}{%- endif -%}
-  {%- if quote_author contains 'marco' -%}{%- assign skip_quote = true -%}{%- endif -%}
-  {%- if quote_author contains 'sofie' -%}{%- assign skip_quote = true -%}{%- endif -%}
-  {%- if block.settings.quote != blank and skip_quote == false -%}
-    {%- assign quote_count = quote_count | plus: 1 -%}
-  {%- endif -%}
-{%- endfor -%}
-{%- if quote_count > 0 -%}
-<section class="section scheme-{{ section.settings.color_scheme }}" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
-  <div class="page-width">
-    {%- assign testimonial_heading = section.settings.heading -%}
-    {%- if testimonial_heading == 'Lived with, loved' -%}{%- assign testimonial_heading = '' -%}{%- endif -%}
-    {%- if testimonial_heading != blank -%}<h2 class="h2 center reveal">{{ testimonial_heading }}</h2>{%- endif -%}
-    <ul class="quotes scroller scroller--mobile" role="list">
-      {%- for block in section.blocks -%}
-        {%- assign quote_author = block.settings.author | downcase -%}
-        {%- assign skip_quote = false -%}
-        {%- if quote_author contains 'hannah' -%}{%- assign skip_quote = true -%}{%- endif -%}
-        {%- if quote_author contains 'marco' -%}{%- assign skip_quote = true -%}{%- endif -%}
-        {%- if quote_author contains 'sofie' -%}{%- assign skip_quote = true -%}{%- endif -%}
-        {%- if block.settings.quote != blank and skip_quote == false -%}
-          <li class="reveal" {{ block.shopify_attributes }}>
-            <figure class="quote">
-              {%- if block.settings.rating > 0 -%}<p class="quote__stars" aria-label="{{ block.settings.rating }} / 5">{% for i in (1..block.settings.rating) %}&#9733;{% endfor %}</p>{%- endif -%}
-              <blockquote class="quote__text">{{ block.settings.quote }}</blockquote>
-              {%- if block.settings.author != blank -%}<figcaption class="small muted">{{ block.settings.author }}</figcaption>{%- endif -%}
-            </figure>
-          </li>
-        {%- endif -%}
-      {%- endfor -%}
-    </ul>
-  </div>
-</section>
-{%- endif -%}
+{%- comment -%} Unverifiable template quotes are not rendered. {%- endcomment -%}
 
 {% schema %}
 {
@@ -45,6 +7,10 @@
   "class": "section-testimonials",
   "max_blocks": 6,
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "Quotes are not output until they can be verified. Do not add placeholder reviews."
+    },
     {
       "type": "text",
       "id": "heading",
@@ -109,12 +75,14 @@
         {
           "type": "textarea",
           "id": "quote",
-          "label": "Quote"
+          "label": "Quote",
+          "default": ""
         },
         {
           "type": "text",
           "id": "author",
-          "label": "Author"
+          "label": "Author",
+          "default": ""
         }
       ]
     }
@@ -123,15 +91,9 @@
     {
       "name": "Testimonials",
       "blocks": [
-        {
-          "type": "quote"
-        },
-        {
-          "type": "quote"
-        },
-        {
-          "type": "quote"
-        }
+        { "type": "quote" },
+        { "type": "quote" },
+        { "type": "quote" }
       ]
     }
   ]

@@ -21,7 +21,7 @@
         "buy": { "type": "buy_buttons", "settings": { "show_dynamic_checkout": true } },
         "low_stock": { "type": "low_stock", "settings": { "threshold": 5, "message": "Only [count] left in stock" } },
         "cutoff": { "type": "ship_cutoff", "settings": { "cutoff_hour": 14, "business_days_only": true, "text_before": "Order within [time]", "text_after": "to have it processed [day].", "text_fallback": "Orders are processed Monday–Saturday (Sunday excluded). Cutoff 2pm Eastern. Typically 1–2 processing business days." } },
-        "delivery": { "type": "delivery_estimate", "settings": { "processing_days": 0, "domestic_min": 3, "domestic_max": 7, "intl_min": 5, "intl_max": 8, "business_days": true, "label": "Estimated transit after dispatch: [range]" } },
+        "delivery": { "type": "delivery_estimate", "settings": { "processing_days": 1, "processing_days_max": 2, "domestic_min": 3, "domestic_max": 7, "intl_min": 5, "intl_max": 8, "business_days": true, "label": "Estimated delivery: [range]" } },
         "free_ship": { "type": "free_shipping", "settings": { "threshold": 0, "text_always": "Shipping is calculated at checkout", "text_threshold": "Shipping is calculated at checkout" } },
         "trust": { "type": "trust_row", "settings": { "item_1": "30-day returns", "item_2": "Secure checkout", "item_3": "Real support" } },
         "desc": { "type": "description", "settings": { "heading": "Description", "open": true } },

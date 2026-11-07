@@ -238,46 +238,6 @@
         "padding_bottom": 80
       }
     },
-    "testimonials": {
-      "type": "testimonials",
-      "blocks": {
-        "q1": {
-          "type": "quote",
-          "settings": {
-            "rating": 5,
-            "quote": "",
-            "author": ""
-          }
-        },
-        "q2": {
-          "type": "quote",
-          "settings": {
-            "rating": 5,
-            "quote": "",
-            "author": ""
-          }
-        },
-        "q3": {
-          "type": "quote",
-          "settings": {
-            "rating": 5,
-            "quote": "",
-            "author": ""
-          }
-        }
-      },
-      "block_order": [
-        "q1",
-        "q2",
-        "q3"
-      ],
-      "settings": {
-        "heading": "",
-        "color_scheme": "default",
-        "padding_top": 80,
-        "padding_bottom": 80
-      }
-    },
     "newsletter": {
       "type": "newsletter",
       "settings": {

@@ -196,8 +196,7 @@ p{margin:0 0 1em}
 .editorial__points li{border-top:1px solid var(--color-border);padding-top:1.25rem}
 .editorial__num{display:block;font-size:.75rem;letter-spacing:.14em;margin-bottom:.5rem;opacity:.6}
 @media (max-width:749px){.editorial{grid-template-columns:1fr}}
-/* testimonials — hide until quotes can be verified (new store, no orders) */
-.section-testimonials{display:none}
+/* testimonials */
 .quotes{list-style:none;margin:2.5rem 0 0;padding:0;display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .quote{margin:0;padding:2rem;border:1px solid var(--color-border);border-radius:var(--radius-card);height:100%;display:flex;flex-direction:column;gap:1rem}
 .quote__stars{margin:0;letter-spacing:.15em}

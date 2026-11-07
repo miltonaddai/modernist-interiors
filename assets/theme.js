@@ -117,13 +117,39 @@
     tick(); setInterval(tick, 30000);
   });
 
-  /* Estimated delivery range */
+  /* Estimated delivery: 1–2 processing days (Mon–Sat, skip Sunday, 2pm store cutoff) plus carrier weekdays. */
   $$('[data-delivery]').forEach((el) => {
-    const biz = el.dataset.biz === 'true';
-    const cut = +(el.dataset.cut || 24);
-    const add = (n) => { const d = new Date(); if (d.getHours() >= cut) n++; while (n > 0) { d.setDate(d.getDate() + 1); const w = d.getDay(); if (!biz || (w !== 0 && w !== 6)) n--; } return d; };
-    const f = { month: 'short', day: 'numeric' };
-    $('[data-delivery-text]', el).innerHTML = el.dataset.label.replace('[range]', `<strong>${add(+el.dataset.min).toLocaleDateString(undefined, f)} – ${add(+el.dataset.max).toLocaleDateString(undefined, f)}</strong>`);
+    const carrierBiz = el.dataset.biz === 'true';
+    const cutEl = $('[data-cutoff]');
+    const z = el.dataset.offset || (cutEl && cutEl.dataset.offset) || '+0000';
+    const off = (z[0] === '-' ? -1 : 1) * (parseInt(z.slice(1, 3), 10) * 60 + parseInt(z.slice(3, 5), 10));
+    const hour = +(el.dataset.cut || (cutEl && cutEl.dataset.hour) || 14);
+    const pMin = Math.max(1, +(el.dataset.pmin || 1));
+    const pMax = Math.max(pMin, +(el.dataset.pmax || 2));
+    const tMin = +el.dataset.min;
+    const tMax = +el.dataset.max;
+    const isProcess = (d) => d.getUTCDay() !== 0;
+    const isCarrier = (d) => !carrierBiz || (d.getUTCDay() !== 0 && d.getUTCDay() !== 6);
+    const storeNow = () => new Date(Date.now() + off * 60000);
+    const processStart = () => {
+      const d = storeNow();
+      if (d.getUTCHours() >= hour || !isProcess(d)) {
+        do { d.setUTCDate(d.getUTCDate() + 1); } while (!isProcess(d));
+        d.setUTCHours(0, 0, 0, 0);
+      }
+      return d;
+    };
+    const addDays = (start, n, ok) => {
+      const d = new Date(start);
+      let left = n;
+      while (left > 0) { d.setUTCDate(d.getUTCDate() + 1); if (ok(d)) left--; }
+      return d;
+    };
+    const start = processStart();
+    const minD = addDays(addDays(start, pMin, isProcess), tMin, isCarrier);
+    const maxD = addDays(addDays(start, pMax, isProcess), tMax, isCarrier);
+    const fmt = (d) => d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', timeZone: 'UTC' });
+    $('[data-delivery-text]', el).innerHTML = el.dataset.label.replace('[range]', `<strong>${fmt(minD)} – ${fmt(maxD)}</strong>`);
   });
 
   /* Predictive search (Section Rendering API) */
@@ -250,12 +276,6 @@
         drawer.open(addBtn);
       } catch (_) { form.submit(); } finally { addBtn.disabled = false; }
     });
-  });
-
-  /* Remove unverifiable template testimonials from the DOM (Hannah/Marco/Sofie). */
-  $$('.section-testimonials').forEach((el) => {
-    const t = (el.textContent || '').toLowerCase();
-    if (t.includes('hannah') || t.includes('marco') || t.includes('sofie') || t.includes('lived with, loved')) el.remove();
   });
 
   /* Product recommendations */
