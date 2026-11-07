@@ -215,10 +215,10 @@
     { "type": "ship_cutoff", "name": "Order cutoff", "limit": 1, "settings": [
       { "type": "paragraph", "content": "Counts down to your real daily order cutoff in your store's time zone and resets every day. Only use it if orders really go to your supplier by this time." },
       { "type": "range", "id": "cutoff_hour", "label": "Daily cutoff hour (24h, store time)", "min": 0, "max": 23, "step": 1, "default": 14 },
-      { "type": "checkbox", "id": "business_days_only", "label": "Business days only (skip Sat/Sun)", "default": true },
+      { "type": "checkbox", "id": "business_days_only", "label": "Skip Sunday (process Monday–Saturday)", "info": "When enabled, Saturday is a processing day. Sunday is the only day without processing.", "default": true },
       { "type": "text", "id": "text_before", "label": "Text ([time] = countdown)", "default": "Order within [time]" },
       { "type": "text", "id": "text_after", "label": "Text ([day] = processing day)", "default": "to have it processed [day]." },
-      { "type": "text", "id": "text_fallback", "label": "Text if JavaScript is off", "default": "Orders are processed every business day." }
+      { "type": "text", "id": "text_fallback", "label": "Text if JavaScript is off", "default": "Orders are processed Monday through Saturday." }
     ] },
     { "type": "delivery_estimate", "name": "Estimated delivery", "limit": 1, "settings": [
       { "type": "range", "id": "processing_days", "label": "Extra processing days (added on top of the ranges below)", "info": "Keep at 0 if the ranges below already include processing.", "min": 0, "max": 7, "step": 1, "default": 0 },

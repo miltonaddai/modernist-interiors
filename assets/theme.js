@@ -104,7 +104,7 @@
     const off = (z[0] === '-' ? -1 : 1) * (parseInt(z.slice(1, 3), 10) * 60 + parseInt(z.slice(3, 5), 10));
     const out = $('[data-cutoff-text]', el);
     const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const isBiz = (d) => !biz || (d.getUTCDay() !== 0 && d.getUTCDay() !== 6);
+    const isBiz = (d) => !biz || d.getUTCDay() !== 0;
     const tick = () => {
       const store = new Date(Date.now() + off * 60000);
       const cut = new Date(store); cut.setUTCHours(hour, 0, 0, 0);
