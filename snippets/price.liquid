@@ -10,9 +10,10 @@
 -%}
 <div class="price{% if c > p %} price--sale{% endif %}">
   {%- if product.price_varies and variant == blank -%}
-    {%- assign p_money = product.price_min | money -%}<span class="price__current">{{ 'products.product.price_from' | t: price: p_money }}</span>
+    {%- assign p_money = product.price_min | money -%}
+    <span class="price__current"><span class="price__from">{{ 'products.product.from' | t }}</span><span class="price__amount">{{ p_money }}</span></span>
   {%- else -%}
-    <span class="price__current">{{ p | default: 0 | money }}</span>
+    <span class="price__current"><span class="price__amount">{{ p | default: 0 | money }}</span></span>
   {%- endif -%}
   {%- if c > p -%}<s class="price__compare"><span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>{{ c | money }}</s>{%- endif -%}
 </div>

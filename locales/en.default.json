@@ -37,6 +37,7 @@
       "sold_out": "Sold out",
       "on_sale": "Sale",
       "price_from": "From {{ price }}",
+      "from": "From",
       "regular_price": "Regular price",
       "quantity": "Quantity",
       "add_to_cart": "Add to cart",
