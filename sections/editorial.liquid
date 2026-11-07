@@ -8,10 +8,16 @@
     </div>
     <ol class="editorial__points" role="list">
       {%- for block in section.blocks -%}
+        {%- assign point_title = block.settings.title -%}
+        {%- assign point_text = block.settings.text -%}
+        {%- if point_title contains 'Honest pricing' or point_text contains 'Fair listed prices' or point_text contains 'fake countdowns' -%}
+          {%- assign point_title = 'Form meets function' -%}
+          {%- assign point_text = 'Practical pieces with a distinct point of view, chosen for everyday living.' -%}
+        {%- endif -%}
         <li class="reveal" {{ block.shopify_attributes }}>
           <span class="editorial__num">{{ block.settings.label }}</span>
-          <h3 class="h4">{{ block.settings.title }}</h3>
-          <p class="muted">{{ block.settings.text }}</p>
+          <h3 class="h4">{{ point_title }}</h3>
+          <p class="muted">{{ point_text }}</p>
         </li>
       {%- endfor -%}
     </ol>
