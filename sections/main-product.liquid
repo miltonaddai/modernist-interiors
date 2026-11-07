@@ -218,7 +218,7 @@
       { "type": "checkbox", "id": "business_days_only", "label": "Skip Sunday (process Monday–Saturday)", "info": "When enabled, Saturday is a processing day. Sunday is the only day without processing.", "default": true },
       { "type": "text", "id": "text_before", "label": "Text ([time] = countdown)", "default": "Order within [time]" },
       { "type": "text", "id": "text_after", "label": "Text ([day] = processing day)", "default": "to have it processed [day]." },
-      { "type": "text", "id": "text_fallback", "label": "Text if JavaScript is off", "default": "Orders are processed Monday through Saturday." }
+      { "type": "text", "id": "text_fallback", "label": "Text if JavaScript is off", "default": "Orders are processed Monday–Saturday (Sunday excluded). Cutoff 2pm Eastern. Typically 1–2 processing business days." }
     ] },
     { "type": "delivery_estimate", "name": "Estimated delivery", "limit": 1, "settings": [
       { "type": "range", "id": "processing_days", "label": "Extra processing days (added on top of the ranges below)", "info": "Keep at 0 if the ranges below already include processing.", "min": 0, "max": 7, "step": 1, "default": 0 },
@@ -229,12 +229,12 @@
       { "type": "range", "id": "intl_min", "label": "International: minimum days", "min": 1, "max": 30, "step": 1, "default": 5 },
       { "type": "range", "id": "intl_max", "label": "International: maximum days", "min": 1, "max": 40, "step": 1, "default": 8 },
       { "type": "checkbox", "id": "business_days", "label": "Count business days only", "default": true },
-      { "type": "text", "id": "label", "label": "Text ([range] = date range)", "default": "Estimated delivery: [range]" }
+      { "type": "text", "id": "label", "label": "Text ([range] = date range)", "default": "Estimated transit after dispatch: [range]" }
     ] },
-    { "type": "free_shipping", "name": "Free shipping note", "limit": 1, "settings": [
-      { "type": "number", "id": "threshold", "label": "Free shipping threshold (store currency, 0 = always free)", "default": 0 },
-      { "type": "text", "id": "text_always", "label": "Text when always free", "default": "Free tracked shipping" },
-      { "type": "text", "id": "text_threshold", "label": "Text with threshold ([amount])", "default": "Free tracked shipping on orders over [amount]" }
+    { "type": "free_shipping", "name": "Shipping note", "limit": 1, "settings": [
+      { "type": "number", "id": "threshold", "label": "Optional free-shipping threshold (store currency, 0 = use the always-on text)", "default": 0 },
+      { "type": "text", "id": "text_always", "label": "Text when no threshold is set", "default": "Shipping is calculated at checkout" },
+      { "type": "text", "id": "text_threshold", "label": "Text with threshold ([amount])", "default": "Shipping is calculated at checkout" }
     ] },
     { "type": "trust_row", "name": "Trust row", "limit": 1, "settings": [
       { "type": "text", "id": "item_1", "label": "Item 1", "default": "30-day returns" },

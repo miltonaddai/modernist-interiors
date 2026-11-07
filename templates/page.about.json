@@ -14,7 +14,7 @@
         "image_first": true,
         "eyebrow": "Our ethos",
         "heading": "Form follows function. Still.",
-        "text": "<p>Modernist Interiors began with a simple frustration: good modern design was either priced like a museum piece or copied badly. We set out to find the middle ground: pieces with clean geometry, honest materials and a reason for every line.</p><p>We work with a small set of makers and suppliers, test what we sell, and keep our range deliberately small, so every lamp, table and object earns its place.</p>",
+        "text": "<p>Modernist Interiors began with a simple frustration: good modern design was either priced like a museum piece or copied badly. We set out to find the middle ground: pieces with clean geometry, honest materials and a reason for every line.</p><p>We work with a small set of makers and suppliers and keep our range deliberately small, so every lamp, table and object is chosen to earn its place.</p>",
         "button_label": "Shop the collection",
         "button_link": "shopify://collections/all",
         "color_scheme": "alt",
@@ -46,7 +46,7 @@
           "settings": {
             "label": "03",
             "title": "Honest pricing",
-            "text": "Fair prices, clear shipping times and no fake countdowns. What you see is what you pay."
+            "text": "Fair listed prices, no fake countdowns. Shipping is calculated at checkout."
           }
         }
       },
@@ -73,8 +73,8 @@
           "type": "value",
           "settings": {
             "shape": "truck",
-            "title": "Free shipping",
-            "text": "On every order, tracked to your door. US & Canada 3–7 days · International 5–8 days."
+            "title": "Shipping",
+            "text": "Calculated at checkout. Allow 1–2 processing business days (Mon–Sat, 2pm Eastern cutoff), then transit after dispatch: US & Canada 3–7 business days · International 5–8 business days."
           }
         },
         "v2": {
@@ -90,7 +90,7 @@
           "settings": {
             "shape": "triangle",
             "title": "30-day returns",
-            "text": "Live with it first. Send it back if it isn’t right."
+            "text": "Unused items in original condition and packaging. You pay return shipping unless the item is faulty or not as described. This does not affect your statutory rights."
           }
         }
       },
