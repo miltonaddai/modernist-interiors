@@ -88,7 +88,7 @@
         "v3": {
           "type": "value",
           "settings": {
-            "shape": "triangle",
+            "shape": "return",
             "title": "30-day returns",
             "text": "Unused items in original condition and packaging. You pay return shipping unless the item is faulty or not as described. This does not affect your statutory rights."
           }
