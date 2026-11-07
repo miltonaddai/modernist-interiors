@@ -126,8 +126,10 @@
     const hour = +(el.dataset.cut || (cutEl && cutEl.dataset.hour) || 14);
     const pMin = Math.max(1, +(el.dataset.pmin || 1));
     const pMax = Math.max(pMin, +(el.dataset.pmax || 2));
-    const tMin = +el.dataset.min;
-    const tMax = +el.dataset.max;
+    const hasHandling = el.getAttribute('data-pmin') != null;
+    const domestic = !window.Shopify || Shopify.country === 'US' || Shopify.country === 'CA';
+    const tMin = hasHandling ? +el.dataset.min : (domestic ? 3 : 5);
+    const tMax = hasHandling ? +el.dataset.max : (domestic ? 7 : 8);
     const isProcess = (d) => d.getUTCDay() !== 0;
     const isCarrier = (d) => !carrierBiz || (d.getUTCDay() !== 0 && d.getUTCDay() !== 6);
     const storeNow = () => new Date(Date.now() + off * 60000);
