@@ -1,3 +1,4 @@
+{% comment %} Claim correction: unverifiable template quotes are not rendered. {% endcomment %}
 {%- assign quote_count = 0 -%}
 {%- for block in section.blocks -%}
   {%- assign quote_author = block.settings.author | downcase -%}

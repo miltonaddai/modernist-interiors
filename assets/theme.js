@@ -252,6 +252,12 @@
     });
   });
 
+  /* Remove unverifiable template testimonials from the DOM (Hannah/Marco/Sofie). */
+  $$('.section-testimonials').forEach((el) => {
+    const t = (el.textContent || '').toLowerCase();
+    if (t.includes('hannah') || t.includes('marco') || t.includes('sofie') || t.includes('lived with, loved')) el.remove();
+  });
+
   /* Product recommendations */
   $$('[data-recommendations]').forEach(async (el) => {
     try {
