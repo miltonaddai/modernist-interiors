@@ -11,8 +11,18 @@
             {%- else -%}
               <span class="values__icon values__icon--{{ block.settings.shape }}" aria-hidden="true"></span>
           {%- endcase -%}
-          <h3 class="values__title">{{ block.settings.title }}</h3>
-          {%- if block.settings.text != blank -%}<p class="muted small">{{ block.settings.text }}</p>{%- endif -%}
+          {%- assign value_title = block.settings.title -%}
+          {%- assign value_text = block.settings.text -%}
+          {%- if value_title contains 'Free shipping' or value_text contains 'On every order, tracked' -%}
+            {%- assign value_title = 'Shipping' -%}
+            {%- assign value_text = 'Calculated at checkout. Allow 1–2 processing business days (Mon–Sat, 2pm Eastern cutoff), then transit after dispatch: US & Canada 3–7 business days · International 5–8 business days.' -%}
+          {%- endif -%}
+          {%- if value_text contains 'Live with it first' -%}
+            {%- assign value_title = '30-day returns' -%}
+            {%- assign value_text = 'Unused items in original condition and packaging. You pay return shipping unless the item is faulty or not as described. This does not affect your statutory rights.' -%}
+          {%- endif -%}
+          <h3 class="values__title">{{ value_title }}</h3>
+          {%- if value_text != blank -%}<p class="muted small">{{ value_text }}</p>{%- endif -%}
         </li>
       {%- endfor -%}
     </ul>

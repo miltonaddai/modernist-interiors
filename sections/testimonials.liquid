@@ -1,14 +1,28 @@
 {%- assign quote_count = 0 -%}
 {%- for block in section.blocks -%}
-  {%- if block.settings.quote != blank -%}{%- assign quote_count = quote_count | plus: 1 -%}{%- endif -%}
+  {%- assign quote_author = block.settings.author | downcase -%}
+  {%- assign skip_quote = false -%}
+  {%- if quote_author contains 'hannah' -%}{%- assign skip_quote = true -%}{%- endif -%}
+  {%- if quote_author contains 'marco' -%}{%- assign skip_quote = true -%}{%- endif -%}
+  {%- if quote_author contains 'sofie' -%}{%- assign skip_quote = true -%}{%- endif -%}
+  {%- if block.settings.quote != blank and skip_quote == false -%}
+    {%- assign quote_count = quote_count | plus: 1 -%}
+  {%- endif -%}
 {%- endfor -%}
 {%- if quote_count > 0 -%}
 <section class="section scheme-{{ section.settings.color_scheme }}" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
   <div class="page-width">
-    {%- if section.settings.heading != blank -%}<h2 class="h2 center reveal">{{ section.settings.heading }}</h2>{%- endif -%}
+    {%- assign testimonial_heading = section.settings.heading -%}
+    {%- if testimonial_heading == 'Lived with, loved' -%}{%- assign testimonial_heading = '' -%}{%- endif -%}
+    {%- if testimonial_heading != blank -%}<h2 class="h2 center reveal">{{ testimonial_heading }}</h2>{%- endif -%}
     <ul class="quotes scroller scroller--mobile" role="list">
       {%- for block in section.blocks -%}
-        {%- if block.settings.quote != blank -%}
+        {%- assign quote_author = block.settings.author | downcase -%}
+        {%- assign skip_quote = false -%}
+        {%- if quote_author contains 'hannah' -%}{%- assign skip_quote = true -%}{%- endif -%}
+        {%- if quote_author contains 'marco' -%}{%- assign skip_quote = true -%}{%- endif -%}
+        {%- if quote_author contains 'sofie' -%}{%- assign skip_quote = true -%}{%- endif -%}
+        {%- if block.settings.quote != blank and skip_quote == false -%}
           <li class="reveal" {{ block.shopify_attributes }}>
             <figure class="quote">
               {%- if block.settings.rating > 0 -%}<p class="quote__stars" aria-label="{{ block.settings.rating }} / 5">{% for i in (1..block.settings.rating) %}&#9733;{% endfor %}</p>{%- endif -%}

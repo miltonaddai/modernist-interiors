@@ -8,7 +8,9 @@
     <div class="split__content reveal">
       {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
       {%- if section.settings.heading != blank -%}<h2 class="h2">{{ section.settings.heading }}</h2>{%- endif -%}
-      {%- if section.settings.text != blank -%}<div class="rte">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="rte">{{ section.settings.text | replace: 'test what we sell, and keep our range deliberately small, so every lamp, table and object earns its place.', 'and keep our range deliberately small, so every lamp, table and object is chosen to earn its place.' }}</div>
+      {%- endif -%}
       {%- if section.settings.button_label != blank -%}<a href="{{ section.settings.button_link | default: '#' }}" class="button button--secondary">{{ section.settings.button_label }}</a>{%- endif -%}
     </div>
   </div>

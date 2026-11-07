@@ -3,8 +3,14 @@
   <div class="page-width">
     <div class="section-head reveal">
       <div>
-      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
-      {%- if section.settings.heading != blank -%}<h2 class="h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- assign feat_eyebrow = section.settings.eyebrow -%}
+      {%- assign feat_heading = section.settings.heading -%}
+      {%- if feat_heading == 'Fresh from the studio' -%}
+        {%- assign feat_heading = 'New arrivals' -%}
+        {%- assign feat_eyebrow = '' -%}
+      {%- endif -%}
+      {%- if feat_eyebrow != blank -%}<p class="eyebrow">{{ feat_eyebrow }}</p>{%- endif -%}
+      {%- if feat_heading != blank -%}<h2 class="h2">{{ feat_heading }}</h2>{%- endif -%}
       </div>
       {%- if section.settings.show_view_all and col != blank -%}<a href="{{ col.url }}" class="link-arrow">{{ 'general.view_all' | t }} {% render 'icon', icon: 'arrow', size: 14 %}</a>{%- endif -%}
     </div>
