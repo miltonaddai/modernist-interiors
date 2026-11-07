@@ -1,0 +1,14 @@
+{%- comment -%} Favicon: theme setting, then Shopify brand square logo, then theme asset. {%- endcomment -%}
+{%- liquid
+  assign mi_favicon = settings.favicon
+  if mi_favicon == blank and shop.brand.square_logo != blank
+    assign mi_favicon = shop.brand.square_logo
+  endif
+-%}
+{%- if mi_favicon != blank -%}
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ mi_favicon | image_url: width: 32, height: 32 }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ mi_favicon | image_url: width: 180, height: 180 }}">
+{%- else -%}
+  <link rel="icon" type="image/png" sizes="512x512" href="{{ 'favicon.png' | asset_url }}">
+  <link rel="apple-touch-icon" href="{{ 'favicon.png' | asset_url }}">
+{%- endif -%}
