@@ -3,7 +3,6 @@
     <div class="mi-contact__intro">
       <h1 class="mi-contact__title">{{ section.settings.heading | default: page.title }}</h1>
       {% if section.settings.intro != blank %}<div class="mi-contact__lead">{{ section.settings.intro }}</div>{% endif %}
-      {% if page.content != blank %}<div class="rte">{{ page.content }}</div>{% endif %}
     </div>
 
     <div class="mi-contact__form-col">
@@ -47,13 +46,15 @@
         <li><a href="{{ shop.refund_policy.url | default: '/policies/refund-policy' }}">Returns &amp; refunds →</a></li>
       </ul>
     </aside>
+
+    {% if page.content != blank %}<div class="mi-contact__body rte">{{ page.content }}</div>{% endif %}
   </div>
 </section>
 
 <style>
   .mi-contact{padding:calc(var(--pt)*.6) 0 calc(var(--pb)*.6);font-family:Inter,var(--font-body-family,sans-serif)}
-  .mi-contact__wrap{display:grid;gap:28px;grid-template-areas:"intro" "form" "side"}
-  .mi-contact__intro{grid-area:intro}.mi-contact__form-col{grid-area:form}.mi-contact__side{grid-area:side}
+  .mi-contact__wrap{display:grid;gap:28px;grid-template-areas:"intro" "form" "side" "body"}
+  .mi-contact__intro{grid-area:intro}.mi-contact__form-col{grid-area:form}.mi-contact__side{grid-area:side}.mi-contact__body{grid-area:body;margin-top:8px;min-width:0}
   .mi-contact__title{font-weight:700;letter-spacing:-.02em;font-size:clamp(32px,8vw,56px);line-height:1.05;margin:0 0 12px}
   .mi-contact__lead{font-size:17px;line-height:1.55;opacity:.85;max-width:52ch}
   .mi-contact__form{display:grid;gap:14px}
@@ -79,7 +80,7 @@
   .mi-contact__links{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:4px}
   .mi-contact__links a{display:block;padding:10px 0;font-weight:600;text-decoration:none;border-top:1px solid rgba(0,0,0,.1)}
   @media (min-width:750px){.mi-contact{padding:var(--pt) 0 var(--pb)}.mi-contact__row{grid-template-columns:1fr 1fr}.mi-contact__btn{width:auto;padding:0 40px;justify-self:start}}
-  @media (min-width:990px){.mi-contact__wrap{grid-template-columns:1.6fr 1fr;column-gap:56px;grid-template-areas:"intro intro" "form side";align-items:start}}
+  @media (min-width:990px){.mi-contact__wrap{grid-template-columns:1.6fr 1fr;column-gap:56px;grid-template-areas:"intro intro" "form side" "body body";align-items:start}.mi-contact__body{margin-top:12px}}
 </style>
 
 {% schema %}
