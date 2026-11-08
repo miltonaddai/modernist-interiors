@@ -24,8 +24,22 @@
   </ul>
   <div class="drawer__footer">
     <div class="drawer__total"><span>{{ 'cart.subtotal' | t }}</span><span>{{ cart.total_price | money_with_currency }}</span></div>
-    <p class="muted small">{{ 'cart.taxes' | t }}</p>
-    <form action="{{ routes.cart_url }}" method="post"><button type="submit" name="checkout" class="button button--full">{{ 'cart.checkout' | t }}</button></form>
+    <form action="{{ routes.cart_url }}" method="post">
+      <button type="submit" name="checkout" class="button button--full drawer__checkout">
+        <svg class="drawer__checkout-lock" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="11" width="12" height="9.5" rx="1.4"/><path d="M8.6 11V8.1a3.4 3.4 0 0 1 6.8 0V11"/></svg>
+        <span>Secure payment</span>
+      </button>
+    </form>
+    <p class="drawer__trust">Free shipping · {% if shop.refund_policy != blank %}<a href="{{ shop.refund_policy.url }}">30-day returns</a>{% else %}30-day returns{% endif %}</p>
+    <ul class="payment-icons drawer__payments" role="list">
+      {%- assign skip_pay = 'bancontact,mbway,satispay,paypal,paypalexpress' | split: ',' -%}
+      {%- for type in shop.enabled_payment_types -%}
+        {%- assign type_key = type | downcase | replace: '-', '' | replace: '_', '' -%}
+        {%- unless skip_pay contains type_key -%}
+          <li>{{ type | payment_type_svg_tag: class: 'payment-icon' }}</li>
+        {%- endunless -%}
+      {%- endfor -%}
+    </ul>
     <a href="{{ routes.cart_url }}" class="link small center">{{ 'cart.view' | t }}</a>
   </div>
 {%- endif -%}
