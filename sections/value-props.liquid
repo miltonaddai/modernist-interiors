@@ -7,7 +7,7 @@
           {%- assign value_text = block.settings.text -%}
           {%- if value_title contains 'Free shipping' or value_text contains 'On every order, tracked' -%}
             {%- assign value_title = 'Shipping' -%}
-            {%- assign value_text = 'Calculated at checkout. Allow 1–2 processing business days (Mon–Sat, 2pm Eastern cutoff), then transit after dispatch: US & Canada 3–7 business days · International 5–8 business days.' -%}
+            {%- assign value_text = 'Allow 1–2 processing business days (Mon–Sat, 2pm Eastern cutoff), then transit after dispatch: US & Canada 3–7 business days · International 5–8 business days.' -%}
           {%- endif -%}
           {%- if value_text contains 'Live with it first' -%}
             {%- assign value_title = '30-day returns' -%}
@@ -130,7 +130,7 @@
           "type": "text",
           "id": "text",
           "label": "Text",
-          "default": "Calculated at checkout."
+          "default": "Processing 1–2 business days (Mon–Sat), then transit 3–7 days US & Canada, 5–8 days international."
         }
       ]
     }

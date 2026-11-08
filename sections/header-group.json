@@ -17,7 +17,7 @@
         "a1": {
           "type": "announcement",
           "settings": {
-            "text": "Shipping calculated at checkout",
+            "text": "Free shipping on orders over $150",
             "link": ""
           }
         },
