@@ -1,12 +1,12 @@
 {%- comment -%}
   Drops unverifiable homepage testimonials, and rewrites a stale product
-  no-JS delivery fallback (old main-product.liquid adds handling onto 3–7/5–8).
+  no-JS delivery fallback for US & Canada shipping only.
 {%- endcomment -%}
 {%- assign html = html
-  | replace: 'Estimated delivery:  4–8 business days', 'Estimated delivery: 1–2 processing business days (Mon–Sat) plus 3–7 carrier business days after dispatch'
-  | replace: 'Estimated delivery:  6–9 business days', 'Estimated delivery: 1–2 processing business days (Mon–Sat) plus 5–8 carrier business days after dispatch'
-  | replace: 'Estimated delivery:  3–7 business days', 'Estimated delivery: 1–2 processing business days (Mon–Sat) plus 3–7 carrier business days after dispatch'
-  | replace: 'Estimated delivery:  5–8 business days', 'Estimated delivery: 1–2 processing business days (Mon–Sat) plus 5–8 carrier business days after dispatch'
+  | replace: 'Estimated delivery:  4–8 business days', 'Estimated delivery: 1–2 processing business days (Mon–Sat) plus 3–7 carrier business days after dispatch to US/Canada'
+  | replace: 'Estimated delivery:  6–9 business days', 'Estimated delivery: 1–2 processing business days (Mon–Sat) plus 3–7 carrier business days after dispatch to US/Canada'
+  | replace: 'Estimated delivery:  3–7 business days', 'Estimated delivery: 1–2 processing business days (Mon–Sat) plus 3–7 carrier business days after dispatch to US/Canada'
+  | replace: 'Estimated delivery:  5–8 business days', 'Estimated delivery: 1–2 processing business days (Mon–Sat) plus 3–7 carrier business days after dispatch to US/Canada'
 -%}
 {%- if html contains '__testimonials"' -%}
   {%- assign tsplit = html | split: '__testimonials"' -%}
