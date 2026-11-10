@@ -43,7 +43,7 @@
       <ul class="mi-contact__links">
         <li><a href="{% if shop.customer_accounts_enabled %}{{ routes.account_url }}{% else %}/pages/track-order{% endif %}">Track your order →</a></li>
         <li><a href="{{ shop.shipping_policy.url | default: '/policies/shipping-policy' }}">Shipping policy →</a></li>
-        <li><a href="{{ shop.refund_policy.url | default: '/policies/refund-policy' }}">Returns &amp; refunds →</a></li>
+        <li><a href="/pages/return-policy">Returns &amp; refunds →</a></li>
       </ul>
     </aside>
 

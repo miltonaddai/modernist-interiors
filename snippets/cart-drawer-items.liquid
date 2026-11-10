@@ -30,7 +30,7 @@
         <span>Secure payment</span>
       </button>
     </form>
-    <p class="drawer__trust">Free shipping · {% if shop.refund_policy != blank %}<a href="{{ shop.refund_policy.url }}">30-day returns</a>{% else %}30-day returns{% endif %}</p>
+    <p class="drawer__trust">Free shipping · <a href="/pages/return-policy">30-day returns</a></p>
     <ul class="payment-icons drawer__payments" role="list">
       {%- assign skip_pay = 'bancontact,mbway,satispay,paypal,paypalexpress' | split: ',' -%}
       {%- for type in shop.enabled_payment_types -%}

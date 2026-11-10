@@ -34,6 +34,8 @@
                 {%- else -%}
                   <li><a href="/pages/about">About</a></li>
                   <li><a href="{{ block.settings.contact_url | default: '/pages/contact' }}">Contact</a></li>
+                  <li><a href="/pages/return-policy">Return policy</a></li>
+                  <li><a href="/policies/shipping-policy">Shipping policy</a></li>
                   <li><a href="{{ routes.search_url }}">Search</a></li>
                   {%- if shop.customer_accounts_enabled -%}<li><a href="{{ routes.account_url }}">Track order</a></li>{%- endif -%}
                 {%- endif -%}
@@ -68,9 +70,14 @@
 
   <div class="page-width footer__bottom">
     <p class="small footer__copy">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}</p>
-    {%- if shop.policies.size > 0 -%}
+    {%- if shop.policies.size > 0 or true -%}
       <ul class="footer__policies small" role="list">
-        {%- for policy in shop.policies -%}<li><a href="{{ policy.url }}">{{ policy.title }}</a></li>{%- endfor -%}
+        {%- for policy in shop.policies -%}
+          {%- if policy.title != 'Refund Policy' -%}
+            <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
+          {%- endif -%}
+        {%- endfor -%}
+        <li><a href="/pages/return-policy">Return policy</a></li>
       </ul>
     {%- endif -%}
     {%- liquid
