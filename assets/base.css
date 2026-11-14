@@ -472,3 +472,8 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
   .newsletter__row,.footer__nl-row{flex-direction:column;align-items:stretch}
   .newsletter__row input,.newsletter__row .button,.footer__nl-row input,.footer__nl-row .button{width:100%;min-height:48px}
 }
+@media (max-width: 749px) {
+  .values { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem .5rem; }
+  .values__item:last-child:nth-child(odd) { grid-column: auto; max-width: none; justify-self: stretch; }
+  .values__title { font-size: .8125rem; }
+}
