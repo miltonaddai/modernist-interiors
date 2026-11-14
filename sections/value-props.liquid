@@ -6,20 +6,20 @@
           {%- assign value_title = block.settings.title -%}
           {%- assign value_text = block.settings.text -%}
           {%- assign value_shape = block.settings.shape -%}
+          {%- if value_title contains '30-day returns' or value_shape == 'return' -%}
+            {%- assign value_shape = 'return' -%}
+          {%- endif -%}
           {%- case value_shape -%}
             {%- when 'truck' -%}
               <svg class="values__svg values__svg--wide" viewBox="0 0 36 24" aria-hidden="true" focusable="false"><rect x="0" y="3" width="21" height="13" fill="#D0342C"/><path d="M23 7h6l5 5v4H23z" fill="#1F4E9C"/><rect x="0" y="16" width="34" height="2" fill="#111"/><circle cx="7" cy="19.5" r="3.5" fill="#111"/><circle cx="27" cy="19.5" r="3.5" fill="#111"/><circle cx="7" cy="19.5" r="1.2" fill="#F2B705"/><circle cx="27" cy="19.5" r="1.2" fill="#F2B705"/></svg>
-              <h3 class="values__title">Free shipping</h3>
             {%- when 'arch' -%}
               <svg class="values__svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 12a10 10 0 0 1 20 0z" fill="#1F4E9C"/><rect x="2" y="12" width="20" height="12" fill="#111"/><rect x="9" y="15" width="6" height="9" fill="#F2B705"/></svg>
-              <h3 class="values__title">{{ value_title }}</h3>
             {%- when 'return' -%}
               <svg class="values__svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#F2B705" d="M1.2 6.2 10.6.6v3.4H21.6V22.8H5.6v-5.6h10.4V10.2H10.6v3.4Z"/></svg>
-              <h3 class="values__title">{{ value_title }}</h3>
             {%- else -%}
               <span class="values__icon values__icon--{{ value_shape }}" aria-hidden="true"></span>
-              <h3 class="values__title">{{ value_title }}</h3>
           {%- endcase -%}
+          <h3 class="values__title">{{ value_title }}</h3>
           {%- if value_text != blank -%}<p class="muted small">{{ value_text }}</p>{%- endif -%}
         </li>
       {%- endfor -%}
@@ -116,13 +116,13 @@
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "Free shipping"
+          "default": "Shipping"
         },
         {
           "type": "text",
           "id": "text",
           "label": "Text",
-          "default": ""
+          "default": "Processing 1–2 business days (Mon–Sat), then transit 3–7 carrier business days to the United States and Canada."
         }
       ]
     }
