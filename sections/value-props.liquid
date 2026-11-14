@@ -6,6 +6,10 @@
           {%- assign value_title = block.settings.title -%}
           {%- assign value_text = block.settings.text -%}
           {%- assign value_shape = block.settings.shape -%}
+          {%- if value_shape == 'truck' -%}
+            {%- assign value_title = 'Free shipping' -%}
+            {%- assign value_text = '' -%}
+          {%- endif -%}
           {%- if value_title contains '30-day returns' or value_shape == 'return' -%}
             {%- assign value_shape = 'return' -%}
           {%- endif -%}
