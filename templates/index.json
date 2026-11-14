@@ -65,8 +65,7 @@
           "type": "value",
           "settings": {
             "shape": "truck",
-            "title": "Free shipping",
-            "text": ""
+            "title": "Free shipping"
           }
         },
         "v2": {
