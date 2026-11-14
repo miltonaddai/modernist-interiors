@@ -65,8 +65,8 @@
           "type": "value",
           "settings": {
             "shape": "truck",
-            "title": "Shipping",
-            "text": "Allow 1–2 processing business days (Mon–Sat, 2pm Eastern cutoff), then transit 3–7 carrier business days after dispatch throughout the United States and Canada."
+            "title": "Free shipping",
+            "text": ""
           }
         },
         "v2": {
@@ -74,7 +74,7 @@
           "settings": {
             "shape": "arch",
             "title": "Design classics",
-            "text": "Bauhaus and mid-century forms, faithfully interpreted."
+            "text": ""
           }
         },
         "v3": {
@@ -82,7 +82,7 @@
           "settings": {
             "shape": "return",
             "title": "30-day returns",
-            "text": "Unused items in original condition and packaging. You pay return shipping unless the item is faulty or not as described. This does not affect your statutory rights."
+            "text": ""
           }
         }
       },
