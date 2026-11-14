@@ -2,11 +2,16 @@
   <div class="page-width">
     <ul class="values" role="list">
       {%- for block in section.blocks -%}
+        {%- assign value_title = block.settings.title -%}
+        {%- assign value_text = block.settings.text -%}
+        {%- assign value_shape = block.settings.shape -%}
+        {%- if value_shape == 'truck' or forloop.index == 1 -%}
+          {%- assign value_title = 'Free shipping' -%}
+          {%- assign value_text = '' -%}
+          {%- assign value_shape = 'truck' -%}
+        {%- endif -%}
         <li class="values__item reveal" {{ block.shopify_attributes }}>
-          {%- assign value_title = block.settings.title -%}
-          {%- assign value_text = block.settings.text -%}
-          {%- assign value_shape = block.settings.shape -%}
-          {%- if value_shape == 'truck' -%}
+          {%- if value_shape == 'truck' or forloop.index == 1 -%}
             {%- assign value_title = 'Free shipping' -%}
             {%- assign value_text = '' -%}
           {%- endif -%}
