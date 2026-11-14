@@ -5,14 +5,6 @@
         <li class="values__item reveal" {{ block.shopify_attributes }}>
           {%- assign value_title = block.settings.title -%}
           {%- assign value_text = block.settings.text -%}
-          {%- if value_title contains 'Free shipping' or value_text contains 'On every order, tracked' -%}
-            {%- assign value_title = 'Shipping' -%}
-            {%- assign value_text = 'Allow 1–2 processing business days (Mon–Sat, 2pm Eastern cutoff), then transit 3–7 carrier business days after dispatch throughout the United States and Canada.' -%}
-          {%- endif -%}
-          {%- if value_text contains 'Live with it first' -%}
-            {%- assign value_title = '30-day returns' -%}
-            {%- assign value_text = 'Unused items in original condition and packaging. You pay return shipping unless the item is faulty or not as described. This does not affect your statutory rights.' -%}
-          {%- endif -%}
           {%- assign value_shape = block.settings.shape -%}
           {%- if value_title contains '30-day returns' or value_shape == 'return' -%}
             {%- assign value_shape = 'return' -%}
