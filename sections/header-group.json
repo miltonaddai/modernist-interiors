@@ -14,13 +14,6 @@
     "announcement": {
       "type": "announcement-bar",
       "blocks": {
-        "a1": {
-          "type": "announcement",
-          "settings": {
-            "text": "Thoughtful design for everyday living",
-            "link": ""
-          }
-        },
         "a2": {
           "type": "announcement",
           "settings": {
@@ -30,7 +23,6 @@
         }
       },
       "block_order": [
-        "a1",
         "a2"
       ],
       "settings": {
